@@ -1,3 +1,9 @@
+:root {
+  --color-blue-dark: rgb(26, 0, 110);
+  --color-blue-middle: rgb(42, 2, 191);
+  --color-blue-light: rgb(125, 183, 248);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +16,22 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.nav-item a:focus {
+  color: orange !important;
+}
+
+.link {
+  padding: 4px;
+  transition: color 0.15s ease-in-out;
+}
+
+.link--active {
+  color: orange;
+}
+
+.link--unactive {
+  text-decoration: none;
+  color: white;
 }

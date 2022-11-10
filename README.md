@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# English Notes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Objective
 
-## Available Scripts
+- Create a high performance React App
+- Comply with WCAG2.1. Level AA
+- Imporve english vocabulary day by day
 
-In the project directory, you can run:
+## Framework and 3rd libraries
 
-### `npm start`
+- React
+- Typescript
+- Bootstrap 5
+- Markdown Editor : @uiw/react-md-editor
+- React-router-dom v6
+- Protected routes
+- Markdown Display: Markdown to JSX
+- Yup, React-hook-form
+- database: Firestore database (attention: ≠ Realtime database)
+- authentication: email-password
+- tsconfig.json: absolute imports
+- Modify webpack.config.js without eject using @craco/craco
+- analyzer and compress bundled files after building
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Vscode extensions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- intellisense for css class names in HTML
+- html css support
+- emmet
+- auto import
+- auto rename tag
+- react/redux/react-native snippets
 
-### `npm test`
+## Configurations
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- create .env.local under root folder(package.json exists)
 
-### `npm run build`
+```
+REACT_APP_API_KEY=your-api-key
+REACT_APP_AUTH_DOMAIN=your-app-auth-domain
+...
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- set environment variables under window powershell
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+$env:variable='value'
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- npm run start
 
-### `npm run eject`
+## Screenshots
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Lighthouse Score](./public/performance1.jpg)
+![small-screen](./public/small-screen.jpg)
