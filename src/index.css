@@ -18,20 +18,44 @@ code {
     monospace;
 }
 
-.nav-item a:focus {
-  color: orange !important;
-}
-
 .link {
   padding: 4px;
   transition: color 0.15s ease-in-out;
 }
 
+.link a {
+  text-decoration: none;
+}
+
+/* .nav-item a:focus {
+  color: orange !important;
+} */
+
 .link--active {
-  color: orange;
+  color: red;
 }
 
 .link--unactive {
   text-decoration: none;
   color: white;
+}
+
+/* Second Navbar */
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: no-wrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }

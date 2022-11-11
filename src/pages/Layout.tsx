@@ -19,12 +19,13 @@ function Layout() {
   const toggleButtonRef = useRef<HTMLButtonElement>(null)
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <header>
-        <nav className='navbar navbar-expand-lg bg-primary sticky-top'>
+      <header className='sticky-top'>
+        <nav className='navbar navbar-expand-lg bg-primary'>
           <div className='container-fluid d-flex'>
             <div className='d-md-none'>
               <button
                 type='button'
+                aria-label='toggle sidebar'
                 ref={toggleButtonRef}
                 data-bs-toggle='offcanvas'
                 data-bs-target='#sidebar'
@@ -33,7 +34,7 @@ function Layout() {
                 <Bars3Icon width={24} height={24} />
               </button>
             </div>
-            <a className='navbar-brand' href='/' aria-label='Home'>
+            <a className='navbar-brand' href='/' aria-label='home'>
               <GlobeAltIcon
                 width={24}
                 height={24}
@@ -50,8 +51,7 @@ function Layout() {
                   <button
                     type='button'
                     className='relative border-1 border-white border-md-1 border-md-white rounded  bg-transparent mx-4'
-                    style={{top:"-2px"}}
-                    >
+                    style={{ top: '-2px' }}>
                     <MagnifyingGlassIcon
                       width={24}
                       height={24}
