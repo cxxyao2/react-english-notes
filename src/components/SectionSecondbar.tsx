@@ -9,7 +9,7 @@ const SectionSecondbar = ({ stats }: IProps) => {
     <div className='nav-scroller row bg-body  shadow-sm'>
       <nav className='nav' aria-label='Secondary navigation'>
         {stats.map((stat) => (
-          <a className='nav-link active' aria-current='page' href='#'>
+          <a key={stat.name} className='nav-link active' aria-current='page' href='#'>
             {stat.name}
             <span className='badge text-bg-warning rounded-pill align-text-bottom'>
               {stat.unmastered}

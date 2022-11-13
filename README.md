@@ -53,3 +53,10 @@ $env:variable='value'
 
 ![Lighthouse Score](./public/performance1.jpg)
 ![small-screen](./public/small-screen.jpg)
+
+# create and edit blog
+
+https://www.youtube.com/watch?v=0pPlbLyeclI
+
+current Markdown
+https://npm.io/package/@uiw/react-md-editor

@@ -29,7 +29,7 @@ const SectionWords = ({ stats }: IProps) => {
     const IconName = icons[stat.name as ObjectKey]
 
     return (
-      <>
+      <div className='container white'>
         <div className='d-flex flex-row align-items-center justify-content-start'>
           <div>
             <IconName
@@ -51,16 +51,18 @@ const SectionWords = ({ stats }: IProps) => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     )
   }
   return (
     <section id='words'>
+      <div className='container bg-white'>
       <div className='row g-5 my-2'>
         <div className='col'>
           <h3 className='pb-4 mb-4 fst-italic border-bottom'>Words Section</h3>
           {abc.map((stat) => createCategory(stat))}
         </div>
+      </div>
       </div>
     </section>
   )

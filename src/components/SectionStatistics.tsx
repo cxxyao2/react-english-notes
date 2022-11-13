@@ -13,6 +13,7 @@ const SectionStatistics = ({ stats }: IProps) => {
 
   return (
     <section id='statistics'>
+      <div className='container bg-white'>
       <div className='row mb-2'>
         <div className='col'>
           <h3 className='pb-4 mb-4 fst-italic border-bottom'>Statistics</h3>
@@ -30,7 +31,7 @@ const SectionStatistics = ({ stats }: IProps) => {
             </thead>
             <tbody>
               {stats.map((stat) => (
-                <tr>
+                <tr key={stat.name}>
                   <td>{stat.name}</td>
                   <td>{stat.mastered}</td>
                   <td>{stat.unmastered}</td>
@@ -46,6 +47,7 @@ const SectionStatistics = ({ stats }: IProps) => {
             </tfoot>
           </table>
         </div>
+      </div>
       </div>
     </section>
   )

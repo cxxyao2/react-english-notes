@@ -6,17 +6,18 @@ import SecondNavbar from 'components/SectionSecondbar'
 import Statistics from 'components/SectionStatistics'
 import SectionWords from 'components/SectionWords'
 import SectionTopics from 'components/SectionTopics'
+import HeroSection from 'components/HeroSection'
 
 const initStates: Stats[] = [
-  { name: 'IT', mastered: 0, unmastered: 0 },
-  { name: 'Finance', mastered: 0, unmastered: 0 },
   { name: 'Culture', mastered: 0, unmastered: 0 },
-  { name: 'Health', mastered: 0, unmastered: 0 },
   { name: 'Weather', mastered: 0, unmastered: 0 },
-  { name: 'Sports', mastered: 0, unmastered: 0 }
+  { name: 'Health', mastered: 0, unmastered: 0 },
+  { name: 'Sports', mastered: 0, unmastered: 0 },
+  { name: 'Finance', mastered: 0, unmastered: 0 },
+  { name: 'IT', mastered: 0, unmastered: 0 }
 ]
 export default function HomePage() {
-  const { isLoading, setIsLoading } = useSearch()
+  const { isLoading, setIsLoading, topError, setTopError } = useSearch()
   const [stats, setStats] = useState<Stats[]>(initStates)
   const dataFetchRef = useRef(false)
 
@@ -26,8 +27,6 @@ export default function HomePage() {
       .then((data) => {
         const newStats: Stats[] = []
         data.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, ' => ', doc.data())
           newStats.push({
             id: doc.id,
             name: doc.data().name,
@@ -35,9 +34,14 @@ export default function HomePage() {
             unmastered: doc.data().unmastered
           })
         })
-        setStats(() => newStats)
+        if (data.size > 0) {
+          setStats(() => newStats)
+        } else {
+          setTopError('Database Error: Data fetching failded.')
+        }
       })
       .catch((err) => {
+        console.log('real error')
         console.error(err)
       })
       .finally(() => {
@@ -51,19 +55,18 @@ export default function HomePage() {
     fetchData()
   }, [])
 
-  if (stats.length === 0) return <div>Loading...</div>
+  // if (stats.length === 0) return <div>Loading...</div>
   return (
     <>
       <SecondNavbar stats={stats}></SecondNavbar>
+      <HeroSection></HeroSection>
+      {/* navigator section  */}
+      <SectionWords stats={stats}></SectionWords>
 
-      <div className='container bg-white'>
-        {/* navigator section  */}
-        <SectionWords stats={stats}></SectionWords>
-
-        {/* Topics Section */}
-        <SectionTopics stats={stats}></SectionTopics>
-        <Statistics stats={stats}></Statistics>
-      </div>
+      {/* Topics Section */}
+      <SectionTopics stats={stats}></SectionTopics>
+      <Statistics stats={stats}></Statistics>
+      {/* TODO show Spinner */}
     </>
   )
 }

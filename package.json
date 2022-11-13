@@ -14,9 +14,11 @@
     "@types/react-dom": "^18.0.8",
     "@uiw/react-md-editor": "^3.18.2",
     "bootstrap": "^5.2.2",
+    "draft-js": "^0.11.7",
     "firebase": "^9.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-hook-form": "^7.37.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
@@ -49,6 +51,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0",
+    "@types/react-draft-wysiwyg": "^1.13.4",
     "compression-webpack-plugin": "^10.0.0",
     "webpack-bundle-analyzer": "^4.7.0"
   }

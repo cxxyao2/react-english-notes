@@ -26,6 +26,8 @@ interface SearchContextType {
   setResults: React.Dispatch<React.SetStateAction<Note[] | null>>
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  topError: string,
+  setTopError: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface SearchContextProviderProps {
@@ -38,7 +40,9 @@ export const SearchContext = createContext<SearchContextType>({
   setSearchKey: (value: any) => {},
   setResults: (value: any) => {},
   isLoading: false,
-  setIsLoading: (value: any) => {}
+  setIsLoading: (value: any) => {},
+  topError:'',
+  setTopError:(value:any)=>{}
 })
 
 export function useSearch() {
@@ -51,6 +55,7 @@ export function SearchContextProvider({
   const [searchKey, setSearchKey] = useState<string | null>(null)
   const [results, setResults] = useState<Array<Note> | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [topError,setTopError] = useState<string>('')
 
   const getDataBySearchKey = async (criteria: string) => {
     const foundNotes: Array<Note> = []
@@ -95,11 +100,6 @@ export function SearchContextProvider({
   }
 
   useEffect(() => {
-    // get data from firestore
-    // no wildcard can be used in firestore query
-    // first, get key array
-
-    // second, locate keyId from key array
     setIsLoading(true)
     try {
       getDataBySearchKey(searchKey || '')
@@ -114,7 +114,9 @@ export function SearchContextProvider({
     results,
     setResults,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    topError,
+    setTopError
   }
   return (
     <SearchContext.Provider value={value}>{children}</SearchContext.Provider>
