@@ -1,15 +1,17 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-
 import { SearchContextProvider } from 'contexts/SearchContext'
 import { AuthContextProvider } from 'contexts/AuthContext'
 import Layout from 'pages/Layout'
+import NotFound from 'pages/NotFound'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
-const NavBar = lazy(() => import('./pages/NavBar'))
-const FooterPage = lazy(() => import('./components/Footer'))
+const EditPage = lazy(() => import('./pages/MarkdownEditor'))
+const LoginPage = lazy(() => import('./pages/Login'))
+const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
+
 
 function App() {
   return (
@@ -18,7 +20,38 @@ function App() {
         <Router>
           <Routes>
             <Route path='/' element={<Layout />}>
-              <Route index element={<HomePage />} />
+              <Route
+                index
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <HomePage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path='/edit'
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <EditPage />
+                  </React.Suspense>
+                }
+              />
+                <Route
+                path='/display/:id'
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <DisplayPage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path='/login'
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <LoginPage />
+                  </React.Suspense>
+                }
+              />
               <Route
                 path='/about'
                 element={
@@ -27,6 +60,7 @@ function App() {
                   </React.Suspense>
                 }
               />
+              <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
         </Router>

@@ -18,6 +18,9 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { Note } from 'models/note'
+import { Stats } from 'models/stats'
+
+import { initNavbarData, initCardData, initTopicData } from './../constants'
 
 interface SearchContextType {
   searchKey: string | null
@@ -26,8 +29,14 @@ interface SearchContextType {
   setResults: React.Dispatch<React.SetStateAction<Note[] | null>>
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  topError: string,
+  topError: string
   setTopError: React.Dispatch<React.SetStateAction<string>>
+  sectionNavbarData: Stats[]
+  sectionTopicData: Note[]
+  sectionCardData: Note[] 
+  setSectionNavbarData: React.Dispatch<React.SetStateAction<Stats[]>>
+  setSectionCardData: React.Dispatch<React.SetStateAction<Note[]>>
+  setSectionTopicData: React.Dispatch<React.SetStateAction<Note[]>>
 }
 
 interface SearchContextProviderProps {
@@ -41,8 +50,14 @@ export const SearchContext = createContext<SearchContextType>({
   setResults: (value: any) => {},
   isLoading: false,
   setIsLoading: (value: any) => {},
-  topError:'',
-  setTopError:(value:any)=>{}
+  topError: '',
+  setTopError: (value: any) => {},
+  sectionNavbarData: [],
+  setSectionNavbarData: (value: any) => {},
+  sectionCardData: [],
+  setSectionCardData: (value: any) => {},
+  sectionTopicData: [],
+  setSectionTopicData: (value: any) => {}
 })
 
 export function useSearch() {
@@ -55,7 +70,10 @@ export function SearchContextProvider({
   const [searchKey, setSearchKey] = useState<string | null>(null)
   const [results, setResults] = useState<Array<Note> | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [topError,setTopError] = useState<string>('')
+  const [topError, setTopError] = useState<string>('')
+  const [sectionNavbarData, setSectionNavbarData] = useState(initNavbarData)
+  const [sectionCardData, setSectionCardData] = useState(initCardData)
+  const [sectionTopicData, setSectionTopicData] = useState(initTopicData)
 
   const getDataBySearchKey = async (criteria: string) => {
     const foundNotes: Array<Note> = []
@@ -88,14 +106,15 @@ export function SearchContextProvider({
         language: docData.language,
         category: docData.category,
         keyword: docData.keyword.join(' '),
-        date: new Date(docData.date.toDate()),
+        created: new Date(docData.created.toDate()),
         content: docData.content,
         industry: docData.industry,
-        mastered: docData.mastered || false
+        mastered: docData.mastered || false,
+        hitCounter: docData.hitCounter
       })
     })
 
-    foundNotes.sort((a, b) => (a.date > b.date ? -1 : 1))
+    foundNotes.sort((a, b) => (a.created > b.created ? -1 : 1))
     setResults(foundNotes)
   }
 
@@ -116,7 +135,13 @@ export function SearchContextProvider({
     isLoading,
     setIsLoading,
     topError,
-    setTopError
+    setTopError,
+    sectionCardData,
+    setSectionCardData,
+    sectionTopicData,
+    setSectionTopicData,
+    sectionNavbarData,
+    setSectionNavbarData
   }
   return (
     <SearchContext.Provider value={value}>{children}</SearchContext.Provider>

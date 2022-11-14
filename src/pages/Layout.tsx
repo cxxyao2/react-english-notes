@@ -17,8 +17,7 @@ const activeClassName = 'link link--active'
 const className = 'link link--unactive'
 
 function Layout() {
-  const { isLoading,topError } = useSearch()
-
+  const { isLoading, topError } = useSearch()
 
   const toggleButtonRef = useRef<HTMLButtonElement>(null)
   return (
@@ -34,9 +33,7 @@ function Layout() {
               aria-live='assertive'
               aria-atomic='true'>
               <div className='d-flex'>
-                <div className='toast-body'>
-                 {topError}
-                </div>
+                <div className='toast-body'>{topError}</div>
                 <button
                   type='button'
                   className='btn-close me-2 m-auto'
@@ -105,7 +102,7 @@ function Layout() {
                     </li>
                     <li className='d-none d-md-block nav-item me-4'>
                       <MyNavLink
-                        to='/about'
+                        to='/edit'
                         className={className}
                         activeClassName={activeClassName}>
                         Edit(Protected)
@@ -113,7 +110,7 @@ function Layout() {
                     </li>
                     <li className='nav-item'>
                       <MyNavLink
-                        to='/about'
+                        to='/login'
                         className={className}
                         activeClassName={activeClassName}>
                         Login
@@ -128,7 +125,7 @@ function Layout() {
 
         <Asidebar></Asidebar>
 
-        <main>
+        <main style={{ minHeight: '300px' }}>
           <Outlet />
         </main>
 

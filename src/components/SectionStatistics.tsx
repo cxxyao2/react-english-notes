@@ -1,22 +1,32 @@
+import { useEffect, useState } from 'react'
+
 import { Stats } from 'models/stats'
+import { useSearch } from 'contexts/SearchContext'
+import { initNavbarData } from '../constants'
 
-type IProps = React.PropsWithChildren<{
-  stats: Stats[]
-}>
 
-const SectionStatistics = ({ stats }: IProps) => {
-  const totalLearnt = stats.reduce((total, b) => total + (b.mastered ?? 0), 0)
-  const totalNeedLearn = stats.reduce(
+
+const SectionStatistics = () => {
+  const [data, setData] = useState(initNavbarData)
+  const { sectionNavbarData: stats } = useSearch()
+  const totalLearnt = data && data.reduce((total, b) => total + (b.mastered ?? 0), 0)
+  const totalNeedLearn = data && data.reduce(
     (total, b) => total + (b.unmastered ?? 0),
     0
   )
+
+  useEffect(()=>{
+    if(stats && stats.length>0) {
+      setData(stats)
+    }
+  },[stats])
 
   return (
     <section id='statistics'>
       <div className='container bg-white'>
       <div className='row mb-2'>
         <div className='col'>
-          <h3 className='pb-4 mb-4 fst-italic border-bottom'>Statistics</h3>
+          <h3 className='pb-4 my-4 fst-italic border-bottom'>Statistics</h3>
           <p>
             We calculate the number of words you learnt according to your
             activities:
@@ -30,7 +40,7 @@ const SectionStatistics = ({ stats }: IProps) => {
               </tr>
             </thead>
             <tbody>
-              {stats.map((stat) => (
+              {stats && stats.map((stat) => (
                 <tr key={stat.name}>
                   <td>{stat.name}</td>
                   <td>{stat.mastered}</td>

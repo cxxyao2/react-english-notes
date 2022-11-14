@@ -1,6 +1,5 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { Note } from 'models/note'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { deleteOneNote } from 'services/notes-service'
 import { useSearch } from 'contexts/SearchContext'
@@ -46,7 +45,7 @@ export default function GenreCard({ item }: CardProps) {
       <div className='card-body text-start d-flex flex-column align-items-stretch'>
         <h5 className='card-title mb-1'>{item.keyword}</h5>
         <div className='fw-light mb-1' style={{ fontSize: '14px' }}>
-          {item.date.toLocaleDateString()}
+          {item.created.toLocaleDateString()}
         </div>
         <p className='flex-grow-1 card-text mb-1'>
           <span

@@ -11,6 +11,7 @@ import {
   getDocs
 } from 'firebase/firestore'
 import { Note } from 'models/note'
+import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
 export const addNote = async (note: Note) => {
   const keywordArray = note.keyword.split(' ')
@@ -33,10 +34,11 @@ export const getOneNote = async (id: string): Promise<Note | null> => {
       language: docData.language,
       category: docData.category,
       keyword: docData.keyword.join(' '),
-      date: new Date(docData.date.toDate()),
+      created: new Date(docData.created.toDate()),
       content: docData.content,
       industry: docData.industry,
-      mastered: docData.mastered || false
+      mastered: docData.mastered || false,
+      hitCounter: docData.hitCounter
     }
   } else {
     return null
@@ -57,8 +59,9 @@ export const deleteOneNote = async (id: string) => {
   return await deleteDoc(doc(db, 'notes', id))
 }
 
-export const updateNote = async (updatedNote: Note) => {
-  return await setDoc(doc(db, 'notes', updatedNote.id || ''), updatedNote)
+export const updateNote = async (newNote: Note) => {
+  console.log('hi,uppdateNOte', newNote)
+  return await setDoc(doc(db, 'notes', newNote.id || ''), newNote)
 }
 
 export const queryNotes = async () => {

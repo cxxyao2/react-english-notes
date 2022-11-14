@@ -5,9 +5,13 @@ export interface Note {
   language: LanguageType
   category: CategoryType
   keyword: string
-  date: Date
+  created: Date
   content: string
   industry: IndustryType
   mastered: Boolean
+  hitCounter:number
+  sequence?:number
+  initId?:string
   id?: string
+
 }

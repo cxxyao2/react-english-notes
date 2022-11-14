@@ -10,6 +10,7 @@ export default function NavBar() {
   useEffect(() => {
     setUser(() => currentUser?.email)
   }, [currentUser])
+  
   return (
     <nav className='navbar navbar-expand-lg bg-primary'>
       <div className='container-fluid'>
@@ -47,7 +48,7 @@ export default function NavBar() {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to='/data/edit'>
+              <Link className='nav-link' to='/edit'>
                 Edit
               </Link>
             </li>

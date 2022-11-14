@@ -1,21 +1,33 @@
 import { Stats } from 'models/stats'
+import { useSearch } from 'contexts/SearchContext'
+import { initNavbarData } from '../constants'
+import { useEffect, useState } from 'react'
 
-type IProps = React.PropsWithChildren<{
-  stats: Stats[]
-}>
+const SectionSecondbar = () => {
+  const [data, setData] = useState(initNavbarData)
+  const { sectionNavbarData: stats } = useSearch()
+  useEffect(()=>{
+    if(stats && stats.length > 0) {
+      setData(stats)
+    }
+  },[stats])
 
-const SectionSecondbar = ({ stats }: IProps) => {
   return (
     <div className='nav-scroller row bg-body  shadow-sm'>
       <nav className='nav' aria-label='Secondary navigation'>
-        {stats.map((stat) => (
-          <a key={stat.name} className='nav-link active' aria-current='page' href='#'>
-            {stat.name}
-            <span className='badge text-bg-warning rounded-pill align-text-bottom'>
-              {stat.unmastered}
-            </span>
-          </a>
-        ))}
+        {data &&
+          data.map((stat) => (
+            <a
+              key={stat.name}
+              className='nav-link active'
+              aria-current='page'
+              href='#'>
+              {stat.name}
+              <span className='badge text-bg-info rounded-pill align-text-bottom'>
+                {stat.unmastered}
+              </span>
+            </a>
+          ))}
       </nav>
     </div>
   )

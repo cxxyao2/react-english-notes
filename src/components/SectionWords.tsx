@@ -4,6 +4,8 @@ import {
   FaceSmileIcon
 } from '@heroicons/react/24/outline'
 import { Stats } from 'models/stats'
+import { useSearch } from 'contexts/SearchContext'
+import { useState, useEffect } from 'react'
 
 type IProps = React.PropsWithChildren<{
   stats: Stats[]
@@ -12,24 +14,36 @@ type IProps = React.PropsWithChildren<{
 const icons = {
   it: ComputerDesktopIcon,
   finance: CurrencyDollarIcon,
-  culture: FaceSmileIcon
+  culture: FaceSmileIcon,
+  health: ComputerDesktopIcon,
+  weather: CurrencyDollarIcon,
+  sports: FaceSmileIcon
 }
 
-// var MyComponent = Components[type + "Component"];
-// return <MyComponent />;
+const initData: Stats[] = [
+  { name: 'it', mastered: 1, unmastered: 1 },
+  { name: 'finance', mastered: 1, unmastered: 2 },
+  { name: 'culture', mastered: 1, unmastered: 3 }
+]
 
-const SectionWords = ({ stats }: IProps) => {
-  const abc: Stats[] = [
-    { name: 'it', mastered: 1, unmastered: 1 },
-    { name: 'finance', mastered: 1, unmastered: 2 },
-    { name: 'culture', mastered: 1, unmastered: 3 }
-  ]
+const SectionWords = () => {
+  const [data, setData] = useState(initData)
+  const { sectionNavbarData: stats } = useSearch()
+
+  useEffect(() => {
+    if (stats && stats.length > 0) {
+      setData(stats.slice(0, 3))
+    }
+  }, [stats])
+
+
+
   const createCategory = (stat: Stats) => {
     type ObjectKey = keyof typeof icons
-    const IconName = icons[stat.name as ObjectKey]
+    const IconName = icons[stat.name.toLowerCase() as ObjectKey]
 
     return (
-      <div className='container white'>
+      <div key={stat.name} className='container white'>
         <div className='d-flex flex-row align-items-center justify-content-start'>
           <div>
             <IconName
@@ -57,12 +71,14 @@ const SectionWords = ({ stats }: IProps) => {
   return (
     <section id='words'>
       <div className='container bg-white'>
-      <div className='row g-5 my-2'>
-        <div className='col'>
-          <h3 className='pb-4 mb-4 fst-italic border-bottom'>Words Section</h3>
-          {abc.map((stat) => createCategory(stat))}
+        <div className='row g-4 mt-1 mb-2'>
+          <div className='col'>
+            <h3 className='pb-4 mb-4 fst-italic border-bottom'>
+              Words Section
+            </h3>
+            {data.map((stat) => createCategory(stat))}
+          </div>
         </div>
-      </div>
       </div>
     </section>
   )
