@@ -12,6 +12,8 @@ import { getMessageOfError } from 'utils'
 
 const MarkdownEditor = () => {
   const btnSubmitRef = useRef(null)
+  const inputDateRef = useRef<HTMLInputElement>(null)
+  const inputTimeRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     language: Yup.string().required('language is required'),
@@ -24,7 +26,6 @@ const MarkdownEditor = () => {
   const { register, handleSubmit, formState } = useForm(formOptions)
   const { errors } = formState
   const [content, setContent] = useState<string | undefined>('Hello world')
-  const [createDate, setCreateDate] = useState(new Date())
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   // add accessibility to  Markdown Editor
@@ -45,15 +46,25 @@ const MarkdownEditor = () => {
   }, [])
 
   const onSubmit = (data: any) => {
-    setErrorMessage(null)
     if (errors && Object.entries(errors).length > 0) return
-    if (!content || !createDate) return
+
+    setErrorMessage(null)
+    const dateString = inputDateRef.current?.value
+    const timeString = inputTimeRef.current?.value
+    let datetimeString = dateString?.concat(' ', timeString ?? '') || ''
+    if (isNaN(Date.parse(datetimeString))) {
+      setErrorMessage('Date or time is invalid.')
+      return
+    }
+    const newCreated: Date = new Date(Date.parse(datetimeString))
+
+    if (!content) return
     const note1: Note = {
       language: data.language,
       category: data.category,
       keyword: data.keyword,
       industry: data.industry,
-      created: createDate,
+      created: newCreated,
       content: content || '',
       mastered: false,
       hitCounter: 1
@@ -71,7 +82,7 @@ const MarkdownEditor = () => {
 
   return (
     <div className='border-2 border-info p-2 shadow w-75 mx-auto'>
-      <form onSubmit={handleSubmit(onSubmit)} className="was-validated">
+      <form onSubmit={handleSubmit(onSubmit)} className='was-validated'>
         <div className='d-flex flex-column'>
           <div className='mb-2'>
             <select
@@ -102,12 +113,12 @@ const MarkdownEditor = () => {
               className='form-select'
               defaultValue={'culture'}
               name='industry'>
-              <option value='finance'>finance</option>
+              <option value='Finance'>Finance</option>
               <option value='IT'>IT</option>
-              <option value='weather'>weather</option>
-              <option value='culture'>culture</option>
-              <option value='sports'>sports</option>
-              <option value='health'>health</option>
+              <option value='Weather'>Weather</option>
+              <option value='Culture'>Culture</option>
+              <option value='Sports'>Sports</option>
+              <option value='Health'>Health</option>
             </select>
           </div>
           <div className='mb-3'>
@@ -128,10 +139,12 @@ const MarkdownEditor = () => {
               <label htmlFor='createdDate'>Created Date: </label>
               <input
                 className='form-control'
+                ref={inputDateRef}
                 id='createdDate'
                 type='date'
                 name='createdDate'
                 required
+                defaultValue={'2022-01-01'}
                 pattern='\d{4}-\d{2}-\d{2}'
               />
               <div className='invalid-tooltip'>Please choose an valid date</div>
@@ -140,12 +153,13 @@ const MarkdownEditor = () => {
             <div className='col-md-6 mb-3'>
               <label htmlFor='createdTime'>Created Time: </label>
               <input
+                ref={inputTimeRef}
                 id='createTime'
                 className='form-control'
                 type='time'
                 name='createdTime'
                 min='00:01'
-                max='10:59'
+                defaultValue={'01:01'}
                 required></input>
 
               <div className='invalid-tooltip'>
@@ -172,8 +186,6 @@ const MarkdownEditor = () => {
               {errorMessage}
             </div>
           )}
-
-
 
           <div className='w-100 mt-2'>
             <button

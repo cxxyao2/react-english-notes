@@ -11,10 +11,10 @@ const Asidebar = () => {
       className='offcanvas offcanvas-start'
       tabIndex={-1}
       id='sidebar'
-      aria-labelledby='sidebarLabel'>
-      <div className='offcanvas-header border-bottom'>
+      aria-labelledby='sidebarLabel' style={{width:'280px'}}>
+      <div className='offcanvas-header border-bottom' >
         <h5 className='offcanvas-title' id='sidebarLabel'>
-          Words And Articles
+          English
         </h5>
         <button
           type='button'

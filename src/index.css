@@ -21,24 +21,18 @@ code {
 .link {
   padding: 4px;
   transition: color 0.15s ease-in-out;
-}
-
-.link a {
   text-decoration: none;
+  color:white;
 }
-
-/* .nav-item a:focus {
-  color: orange !important;
-} */
 
 .link--active {
-  color: red;
+  color: orange !important;
 }
 
-.link--unactive {
+/* .link--unactive {
   text-decoration: none;
   color: white;
-}
+} */
 
 /* Second Navbar */
 .nav-scroller {

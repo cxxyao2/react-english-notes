@@ -5,13 +5,13 @@ import { SearchContextProvider } from 'contexts/SearchContext'
 import { AuthContextProvider } from 'contexts/AuthContext'
 import Layout from 'pages/Layout'
 import NotFound from 'pages/NotFound'
+import PrivateOutlet from './components/PrivateOutlet'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
-const EditPage = lazy(() => import('./pages/MarkdownEditor'))
 const LoginPage = lazy(() => import('./pages/Login'))
 const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
-
+const EditPage = lazy(() => import('./pages/MarkdownEditor'))
 
 function App() {
   return (
@@ -28,15 +28,17 @@ function App() {
                   </React.Suspense>
                 }
               />
-              <Route
-                path='/edit'
-                element={
-                  <React.Suspense fallback={<div>Loading...</div>}>
-                    <EditPage />
-                  </React.Suspense>
-                }
-              />
+              <Route path='/edit' element={<PrivateOutlet />}>
                 <Route
+                  index
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <EditPage />
+                    </React.Suspense>
+                  }
+                />
+              </Route>
+              <Route
                 path='/display/:id'
                 element={
                   <React.Suspense fallback={<div>Loading...</div>}>
@@ -44,6 +46,7 @@ function App() {
                   </React.Suspense>
                 }
               />
+
               <Route
                 path='/login'
                 element={

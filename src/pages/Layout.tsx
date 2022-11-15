@@ -9,15 +9,25 @@ import {
 import Asidebar from 'components/Asidebar'
 import Footer from 'components/Footer'
 import MyNavLink from 'components/MyNavLink'
+import { useAuth } from 'contexts/AuthContext'
 import { useSearch } from 'contexts/SearchContext'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-const activeClassName = 'link link--active'
-const className = 'link link--unactive'
+const activeClassName = 'link--active'
+const className = 'link'
 
 function Layout() {
   const { isLoading, topError } = useSearch()
+  const { currentUser, signOut } = useAuth()
+  const [user, setUser] = useState('')
+  useEffect(() => {
+    const email:string = currentUser?.email || ''
+    const index = email.indexOf('@')
+    let name=''
+    index>=0 && (name = email.slice(0,index))
+    setUser(() => name)
+  }, [currentUser])
 
   const toggleButtonRef = useRef<HTMLButtonElement>(null)
   return (
@@ -97,7 +107,7 @@ function Layout() {
                         to='/about'
                         className={className}
                         activeClassName={activeClassName}>
-                        Catogry1
+                        About
                       </MyNavLink>
                     </li>
                     <li className='d-none d-md-block nav-item me-4'>
@@ -108,14 +118,27 @@ function Layout() {
                         Edit(Protected)
                       </MyNavLink>
                     </li>
-                    <li className='nav-item'>
-                      <MyNavLink
-                        to='/login'
-                        className={className}
-                        activeClassName={activeClassName}>
-                        Login
-                      </MyNavLink>
-                    </li>
+
+                    {!user && (
+                      <li className='nav-item'>
+                        <MyNavLink
+                          to='/login'
+                          className={className}
+                          activeClassName={activeClassName}>
+                          Login
+                        </MyNavLink>
+                      </li>
+                    )}
+                    {user && (
+                      <li className='nav-item'>
+                        <a
+                          className={className}
+                          href='#'
+                          onClick={() => signOut()}>
+                          {user} &nbsp; Logout
+                        </a>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
