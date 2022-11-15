@@ -54,4 +54,8 @@ code {
   -webkit-overflow-scrolling: touch;
 }
 
+.nav .nav-item:hover {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
 

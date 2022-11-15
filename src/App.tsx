@@ -12,6 +12,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'))
 const LoginPage = lazy(() => import('./pages/Login'))
 const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
 const EditPage = lazy(() => import('./pages/MarkdownEditor'))
+const SearchPage = lazy(() => import('./pages/SearchResult'))
 
 function App() {
   return (
@@ -46,6 +47,14 @@ function App() {
                   </React.Suspense>
                 }
               />
+              <Route
+              path='/search'
+              element={
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <SearchPage />
+                </React.Suspense>
+              }
+            />
 
               <Route
                 path='/login'

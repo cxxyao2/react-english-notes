@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
 
 import { useSearch } from 'contexts/SearchContext'
-import SearchForm from './SearchForm'
-import GenreCard from './GenreCard'
+import SearchForm from '../components/SearchForm'
+import GenreCard from '../components/GenreCard'
 
 export default function SearchResult() {
   const { results } = useSearch()
@@ -26,7 +26,7 @@ export default function SearchResult() {
   ]
 
   return (
-    <>
+    <div className='container my-2'>
       <div className='d-block  d-lg-none d-xl-none d-xxl-none'>
         <SearchForm />
       </div>
@@ -63,7 +63,7 @@ export default function SearchResult() {
               ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 function setState(arg0: string): [any, any] {

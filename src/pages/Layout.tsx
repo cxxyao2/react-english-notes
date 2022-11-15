@@ -12,7 +12,7 @@ import MyNavLink from 'components/MyNavLink'
 import { useAuth } from 'contexts/AuthContext'
 import { useSearch } from 'contexts/SearchContext'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 const activeClassName = 'link--active'
 const className = 'link'
@@ -82,6 +82,7 @@ function Layout() {
                 aria-label='Menu Section'>
                 <div className='d-flex flex-row'>
                   <div className='d-none d-md-flex flex-grow-1 justify-content-center'>
+                   <Link to="/search">
                     <button
                       type='button'
                       className='relative border-1 border-white border-md-1 border-md-white rounded  bg-transparent mx-4'
@@ -92,6 +93,7 @@ function Layout() {
                         className='text-white'></MagnifyingGlassIcon>
                       <span className='ms-2 text-white'>Search</span>
                     </button>
+                    </Link>
                   </div>
                   <ul className='nav d-flex  flex-row align-items-center justify-content-end'>
                     <li className='d-none d-md-block nav-item me-4'>
