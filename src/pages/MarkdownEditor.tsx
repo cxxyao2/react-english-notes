@@ -74,6 +74,7 @@ const MarkdownEditor = () => {
       const newTopic = { ...newNote, initId: id }
       updateStats(sorted[0].id, newTopic).then(() => {
         setFreshCounter((pre) => pre + 1)
+        navigate('/')
       })
     }
   }
@@ -92,10 +93,12 @@ const MarkdownEditor = () => {
             ...newNote,
             initId: id
           }).then(() => {
-            return setFreshCounter((pre) => pre + 1)
+             setFreshCounter((pre) => pre + 1)
+             navigate('/')
           })
         } else {
-          return setFreshCounter((pre) => pre + 1)
+           setFreshCounter((pre) => pre + 1)
+           navigate('/')
         }
       })
     }
@@ -136,7 +139,7 @@ const MarkdownEditor = () => {
         if (note1.category === 'word') {
           updateSectionWord(newId, note1)
         }
-        navigate('/')
+
       })
       .catch((error) => {
         let message = getMessageOfError(error)

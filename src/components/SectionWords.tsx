@@ -7,9 +7,9 @@ import { Stats } from 'models/stats'
 import { useSearch } from 'contexts/SearchContext'
 import { useState, useEffect } from 'react'
 
-type IProps = React.PropsWithChildren<{
-  stats: Stats[]
-}>
+// type IProps = React.PropsWithChildren<{
+//   stats: Stats[]
+// }>
 
 const icons = {
   it: ComputerDesktopIcon,
@@ -21,9 +21,9 @@ const icons = {
 }
 
 const initData: Stats[] = [
-  { name: 'it', mastered: 1, unmastered: 1 },
-  { name: 'finance', mastered: 1, unmastered: 2 },
-  { name: 'culture', mastered: 1, unmastered: 3 }
+  { name: 'IT', mastered: 1, unmastered: 1 },
+  { name: 'Finance', mastered: 1, unmastered: 2 },
+  { name: 'Culture', mastered: 1, unmastered: 3 }
 ]
 
 const SectionWords = () => {
@@ -31,6 +31,7 @@ const SectionWords = () => {
   const { sectionNavbarData: stats } = useSearch()
 
   useEffect(() => {
+    console.log('hi, word section will be updated')
     if (stats && stats.length > 0) {
       setData(stats.slice(0, 3))
     }
@@ -60,7 +61,7 @@ const SectionWords = () => {
                 </button>
               </div>
               <span className='d-block'>
-                Need to memorize: {stat.unmastered}
+                Need to learn: {stat.unmastered}
               </span>
             </div>
           </div>

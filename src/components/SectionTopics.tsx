@@ -44,7 +44,9 @@ const SectionTopics = () => {
                       <div className='mb-1 text-muted'>
                         {ele.created.toDateString()}
                       </div>
-                      <p className='card-text mb-auto'>{ele.content.slice(0,30)}...</p>
+                      <p className='card-text mb-auto'>
+                        {ele.content.slice(0, 30)}...
+                      </p>
                       <Link
                         to={`/display/${ele.initId}`}
                         className='stretched-link'>

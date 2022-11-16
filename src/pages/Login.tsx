@@ -76,10 +76,13 @@ export default function Login() {
             </div>
           )}
 
-          <div className='w-100'>
-            {errorFromServer && (
-              <div className='row text-center text-danger my-2'>{errorFromServer}</div>
-            )}
+          {errorFromServer && (
+            <div className='w-100 text-center text-danger my-2'>
+              {errorFromServer}
+            </div>
+          )}
+
+          <div className='d-flex justify-content-around'>
             <button type='submit' className='btn btn-primary mx-4'>
               Login
             </button>

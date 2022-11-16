@@ -43,11 +43,15 @@ const SectionHero = () => {
     const id = currentNote.id
     const newCard = await getFirstUnknownNote(currentCards)
     if (newCard)
-      return updateStats(id!, {
+      updateStats(id!, {
         ...newCard,
         initId: newCard!.id
+      }).then(() => {
+        setFreshCounter((pre) => pre + 1)
       })
-    updateStats(id!, { initId: '', keyword: '' })
+    updateStats(id!, { initId: '', keyword: '' }).then(() => {
+      setFreshCounter((pre) => pre + 1)
+    })
   }
 
   return (
@@ -55,7 +59,7 @@ const SectionHero = () => {
       {data.map((ele) => (
         <div key={ele.id} className='ds-card'>
           <div className='img-wrapper'>
-            <img loading='lazy' src={topicImg} />
+            <img loading='lazy' src={topicImg} alt="word image" />
           </div>
           <div className='mt-1 mb-2 p-1'>
             <div className='' style={{ fontSize: '12px' }}>

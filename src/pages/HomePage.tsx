@@ -26,10 +26,9 @@ export default function HomePage() {
   } = useSearch()
 
   const dataFetchRef = useRef(false)
-  const [myNotes, setMyNotes] = useState<Note[]>([])
 
   const fetchData = () => {
-    console.log('hi, fetchData')
+    console.log(`hi, fetchData is called ${freshCounter} times`)
     setIsLoading(true)
     getAllStats()
       .then((data) => {
@@ -57,8 +56,7 @@ export default function HomePage() {
               id: doc.id,
               initId: doc.data().initId
             })
-            // todo
-            setMyNotes(newCards)
+
           newCards.sort((a, b) => a.created.getTime() - b.created.getTime())
 
           doc.data().section === 'topic' &&

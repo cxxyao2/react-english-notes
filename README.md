@@ -44,12 +44,19 @@ REACT_APP_AUTH_DOMAIN=your-app-auth-domain
 - set environment variables under window powershell
 
 ```
-$env:variable='value'
+$env:variable='varialbe-value'
 ```
 
+## Commands
+
 - npm run start
+- npm run build
+- npx serve -s build
+  windows11 chrome ctrl + shift + n : open a new incognito tab
 
 ## Screenshots
+
+- To use the Snipping Tool :Press Windows logo key + Shift + S.
 
 ![Lighthouse Score](./public/performance1.jpg)
 ![small-screen](./public/small-screen.jpg)
