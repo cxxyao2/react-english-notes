@@ -10,7 +10,6 @@ export interface Note {
   industry: IndustryType
   mastered: Boolean
   hitCounter:number
-  sequence?:number
   initId?:string
   id?: string
 

@@ -26,21 +26,25 @@ const SectionTopics = () => {
             </h3>
 
             <div className='row mb-2'>
-              {data.map((ele) => (
+              {data.map((ele, index) => (
                 <div key={ele.keyword} className='col-md-6' role='article'>
                   <div className='row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative'>
                     <div className='col p-4 d-flex flex-column position-static'>
                       <strong
-                        className={`d-inline-block mb-2 ${
-                          textColors[ele.sequence ?? 1 - 1]
-                        }`}>
+                        className={`d-inline-block mb-2 ${textColors[index]}`}>
                         {ele.industry.toUpperCase()}
                       </strong>
-                      <h3 className='mb-0'>{ele.keyword.charAt(0).toUpperCase().concat(ele.keyword.slice(1))}</h3>
+
+                      <h3 className='mb-0'>
+                        {ele.keyword
+                          .charAt(0)
+                          .toUpperCase()
+                          .concat(ele.keyword.slice(1))}
+                      </h3>
                       <div className='mb-1 text-muted'>
-                         {ele.created.toDateString()}
+                        {ele.created.toDateString()}
                       </div>
-                      <p className='card-text mb-auto'>{ele.content}</p>
+                      <p className='card-text mb-auto'>{ele.content.slice(0,30)}...</p>
                       <Link
                         to={`/display/${ele.initId}`}
                         className='stretched-link'>

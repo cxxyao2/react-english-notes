@@ -1,11 +1,15 @@
 import { db } from '../firebase'
-import {
-  collection,
-  getDocs
-} from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { Stats } from 'models/stats'
+import { Note } from 'models/note'
 
-
+export const updateStats = async (
+  id: string,
+  newStat: Partial<Stats | Note>
+) => {
+  const docRef = doc(db, 'stats', id)
+  return await updateDoc(docRef, newStat)
+}
 
 // export const getOneNote = async (id: string): Promise<Note | null> => {
 //   const docRef = doc(db, 'notes', id)

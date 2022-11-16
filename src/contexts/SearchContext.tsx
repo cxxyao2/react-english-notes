@@ -33,10 +33,14 @@ interface SearchContextType {
   setTopError: React.Dispatch<React.SetStateAction<string>>
   sectionNavbarData: Stats[]
   sectionTopicData: Note[]
-  sectionCardData: Note[] 
+  sectionCardData: Note[]
   setSectionNavbarData: React.Dispatch<React.SetStateAction<Stats[]>>
   setSectionCardData: React.Dispatch<React.SetStateAction<Note[]>>
   setSectionTopicData: React.Dispatch<React.SetStateAction<Note[]>>
+  freshCounter:number
+  setFreshCounter: React.Dispatch<React.SetStateAction<number>>
+
+
 }
 
 interface SearchContextProviderProps {
@@ -57,7 +61,9 @@ export const SearchContext = createContext<SearchContextType>({
   sectionCardData: [],
   setSectionCardData: (value: any) => {},
   sectionTopicData: [],
-  setSectionTopicData: (value: any) => {}
+  setSectionTopicData: (value: any) => {},
+  freshCounter:0,
+  setFreshCounter:(value:any)=>{}
 })
 
 export function useSearch() {
@@ -74,6 +80,7 @@ export function SearchContextProvider({
   const [sectionNavbarData, setSectionNavbarData] = useState(initNavbarData)
   const [sectionCardData, setSectionCardData] = useState(initCardData)
   const [sectionTopicData, setSectionTopicData] = useState(initTopicData)
+  const [freshCounter, setFreshCounter] = useState(0)
 
   const getDataBySearchKey = async (criteria: string) => {
     const foundNotes: Array<Note> = []
@@ -105,7 +112,7 @@ export function SearchContextProvider({
         id: doc.id,
         language: docData.language,
         category: docData.category,
-        keyword: docData.keyword.join(' '),
+        keyword: docData.keyword,
         created: new Date(docData.created.toDate()),
         content: docData.content,
         industry: docData.industry,
@@ -141,7 +148,9 @@ export function SearchContextProvider({
     sectionTopicData,
     setSectionTopicData,
     sectionNavbarData,
-    setSectionNavbarData
+    setSectionNavbarData,
+    freshCounter,
+    setFreshCounter
   }
   return (
     <SearchContext.Provider value={value}>{children}</SearchContext.Provider>

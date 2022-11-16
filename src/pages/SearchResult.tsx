@@ -9,12 +9,12 @@ export default function SearchResult() {
   const { results } = useSearch()
   const [industry, setIndustry] = useState('')
   const industryList = [
-    'finance',
+    'Finance',
     'IT',
-    'weather',
-    'culture',
-    'sports',
-    'health'
+    'Weather',
+    'Culture',
+    'Sports',
+    'Health'
   ]
   const industryClass = [
     'badge text-bg-primary',
@@ -27,10 +27,10 @@ export default function SearchResult() {
 
   return (
     <div className='container my-2'>
-      <div className='d-block  d-lg-none d-xl-none d-xxl-none'>
+      <div className='d-block'>
         <SearchForm />
       </div>
-      <div className='d-flex flex-row justify-content-evenly align-items-center p-4 gap-2 flex-wrap'>
+      <div className='d-flex flex-row justify-content-evenly align-items-center p-2 gap-2 flex-wrap'>
         {industryList.map((item, index) => (
           <button
             key={item}
@@ -47,8 +47,8 @@ export default function SearchResult() {
         ))}
       </div>
       <br className='bg-info border-t-2' />
-      <div className='border-top border-info'>
-        <div className='row p-4 g-4 '>
+      <div className='border-top border-info bg-white rounded-2' style={{minHeight:'300px'}}>
+        <div className='row p-2 g-2 '>
           {results &&
             results
               .filter((item) => item.industry.includes(industry))
@@ -61,6 +61,11 @@ export default function SearchResult() {
                   </div>
                 </div>
               ))}
+          {(!results || results.length === 0) && (
+            <div className='alert alert-danger' role='alert'>
+              No data meet the selection criteria.
+            </div>
+          )}
         </div>
       </div>
     </div>

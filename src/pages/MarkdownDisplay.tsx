@@ -6,6 +6,7 @@ import { getOneNote, updateNote } from 'services/notes-service'
 import { Note } from 'models/note'
 import { Link, useParams } from 'react-router-dom'
 import rehypeSanitize from 'rehype-sanitize'
+import { EyeIcon } from '@heroicons/react/24/outline'
 
 export default function MarkdownDisplay() {
   const { id } = useParams()
@@ -22,6 +23,11 @@ export default function MarkdownDisplay() {
             const currentData = data as Note
             setNote(currentData)
             setContent(currentData.content)
+            updateNote(id, {
+              hitCounter: currentData.hitCounter
+                ? currentData.hitCounter + 1
+                : 1
+            }).then()
           }
         })
         .catch((err) => {
@@ -31,7 +37,7 @@ export default function MarkdownDisplay() {
   }, [id])
 
   const updateContent = () => {
-    note && updateNote({ ...note, content: content ?? '' }).then()
+    note && updateNote(note.id!, { content: content ?? '' }).then()
     navigate('/')
   }
 
@@ -63,17 +69,24 @@ export default function MarkdownDisplay() {
         </div>
 
         <div className='mb-1'>
-          <label className='form-label  fw-semibold'>Date:</label>
+          <label className='form-label  fw-semibold'>Created:</label>
           <div className='form-label'>{note?.created.toLocaleString()}</div>
         </div>
         <br className='border-t-2  border-info' />
 
         <div className='mb-1 border-bottom border-bottom-info'>
-          <label className='form-label  fw-semibold'>Note Content</label>
+          <label className='form-label  fw-semibold'>
+            Note Content{' '}
+            <EyeIcon
+              width={24}
+              height={24}
+              className='text-muted  rounded ms-4 me-1'></EyeIcon>{' '}
+            <span className='text-muted'>{note?.hitCounter || 1}</span>
+          </label>
           {!isEditable && (
             <MDEditor.Markdown
               source={note?.content}
-              className="p-2 rounded"
+              className='p-2 rounded'
               style={{ whiteSpace: 'pre-wrap' }}
             />
           )}
@@ -92,9 +105,7 @@ export default function MarkdownDisplay() {
         <br className='border-t-2  border-info' />
         <div className='d-flex justify-content-between '>
           <button
-            className='btn btn-primary'
-            onClick={() => navigate('/')}>Back</button>
-          <button className='btn btn-outline-secondary'
+            className='btn btn-outline-secondary'
             onClick={() => {
               if (!isEditable) {
                 setIsEditable(true)
@@ -103,6 +114,9 @@ export default function MarkdownDisplay() {
               updateContent()
             }}>
             {isEditable ? 'Save' : 'Edit'}
+          </button>
+          <button className='btn btn-primary' onClick={() => navigate('/')}>
+            Back
           </button>
         </div>
       </div>

@@ -9,6 +9,8 @@ import { addNote } from 'services/notes-service'
 import { Note } from 'models/note'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getMessageOfError } from 'utils'
+import { useSearch } from 'contexts/SearchContext'
+import { updateStats } from 'services/stats-service'
 
 const MarkdownEditor = () => {
   const btnSubmitRef = useRef(null)
@@ -27,10 +29,29 @@ const MarkdownEditor = () => {
   const { errors } = formState
   const [content, setContent] = useState<string | undefined>('Hello world')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const {
+    sectionCardData,
+    sectionTopicData,
+    sectionNavbarData,
+    setFreshCounter
+  } = useSearch()
 
   // add accessibility to  Markdown Editor
   useEffect(() => {
     const editErea = document.querySelector('textarea')
+    const today = new Date()
+    const year = today.getFullYear().toString()
+    const month = (today.getMonth() + 1).toString().padStart(2, '0')
+    const day = today.getDate().toString().padStart(2, '0')
+    const min = today.getMinutes().toString().padStart(2, '0')
+    const sec = today.getSeconds().toString().padStart(2, '0')
+    if (inputDateRef && inputDateRef.current) {
+      inputDateRef.current.value = year + '-' + month + '-' + day
+    }
+
+    if (inputTimeRef && inputTimeRef.current) {
+      inputTimeRef.current.value = '01:01'
+    }
 
     const keyupEvent = (event: KeyboardEvent) => {
       if (event.key === 'Tab') {
@@ -44,6 +65,42 @@ const MarkdownEditor = () => {
       editErea?.removeEventListener('keyup', keyupEvent)
     }
   }, [])
+
+  const updateSectionTopic = (id: string, newNote: Note) => {
+    const sorted = [...sectionTopicData]
+    sorted.sort((a, b) => a.created.getTime() - b.created.getTime())
+
+    if (sorted && sorted[0].id) {
+      const newTopic = { ...newNote, initId: id }
+      updateStats(sorted[0].id, newTopic).then(() => {
+        setFreshCounter((pre) => pre + 1)
+      })
+    }
+  }
+
+  const updateSectionWord = (id: string, newNote: Note) => {
+    const stat = sectionNavbarData.find((ele) => ele.name === newNote.industry)
+    if (stat) {
+      let newStat = {
+        unmastered: stat.unmastered > 0 ? stat.unmastered + 1 : 1
+      }
+      // TODO. PROMISE all,
+      updateStats(stat.id!, newStat).then(() => {
+        const nullCard = sectionCardData.find((ele) => !ele.initId)
+        if (nullCard) {
+          updateStats(nullCard.id!, {
+            ...newNote,
+            initId: id
+          }).then(() => {
+            return setFreshCounter((pre) => pre + 1)
+          })
+        } else {
+          return setFreshCounter((pre) => pre + 1)
+        }
+      })
+    }
+
+  }
 
   const onSubmit = (data: any) => {
     if (errors && Object.entries(errors).length > 0) return
@@ -71,7 +128,14 @@ const MarkdownEditor = () => {
     }
 
     addNote(note1)
-      .then(() => {
+      .then((result) => {
+        const newId = result.id
+        if (note1.category === 'topic') {
+          updateSectionTopic(newId, note1)
+        }
+        if (note1.category === 'word') {
+          updateSectionWord(newId, note1)
+        }
         navigate('/')
       })
       .catch((error) => {

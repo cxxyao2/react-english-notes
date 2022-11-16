@@ -6,7 +6,7 @@ import SecondNavbar from 'components/SectionSecondbar'
 import Statistics from 'components/SectionStatistics'
 import SectionWords from 'components/SectionWords'
 import SectionTopics from 'components/SectionTopics'
-import HeroSection from 'components/HeroSection'
+import SectionHero from 'components/SectionHero'
 import { getMessageOfError } from 'utils'
 import { Note } from 'models/note'
 
@@ -21,12 +21,15 @@ export default function HomePage() {
     sectionTopicData,
     setSectionNavbarData,
     sectionNavbarData,
-    setSectionTopicData
+    setSectionTopicData,
+    freshCounter
   } = useSearch()
 
   const dataFetchRef = useRef(false)
+  const [myNotes, setMyNotes] = useState<Note[]>([])
 
   const fetchData = () => {
+    console.log('hi, fetchData')
     setIsLoading(true)
     getAllStats()
       .then((data) => {
@@ -34,7 +37,6 @@ export default function HomePage() {
         const newCards: Note[] = []
         const newTopics: Note[] = []
         data.forEach((doc) => {
-          console.log('doc is', doc.data())
           doc.data().section === 'navbar' &&
             newStats.push({
               id: doc.id,
@@ -51,11 +53,13 @@ export default function HomePage() {
               content: doc.data().content,
               industry: doc.data().industry || 'IT',
               mastered: doc.data().mastered || false,
-              hitCounter: doc.data().hitcounter,
-              sequence: doc.data().sequence,
-              id: doc.data().id,
+              hitCounter: doc.data().hitCounter || 1,
+              id: doc.id,
               initId: doc.data().initId
             })
+            // todo
+            setMyNotes(newCards)
+          newCards.sort((a, b) => a.created.getTime() - b.created.getTime())
 
           doc.data().section === 'topic' &&
             newTopics.push({
@@ -66,16 +70,20 @@ export default function HomePage() {
               content: doc.data().content,
               industry: doc.data().industry || 'IT',
               mastered: doc.data().mastered || false,
-              hitCounter: doc.data().hitcounter || 1,
-              sequence: doc.data().sequence,
-              id: doc.data().id,
+              hitCounter: doc.data().hitCounter || 1,
+              id: doc.id,
               initId: doc.data().initId
             })
         })
+        newTopics.sort((a, b) => a.created.getTime() - b.created.getTime())
+
         if (newStats.length > 0) {
-          setSectionNavbarData(newStats)
-          setSectionCardData(newCards)
-          setSectionTopicData(newTopics)
+          console.log('new stats', newStats)
+          console.log('new cards', newCards)
+          console.log('new topics', newTopics)
+          setSectionNavbarData(() => newStats)
+          setSectionCardData(() => newCards)
+          setSectionTopicData(() => newTopics)
         } else {
           setTopError('Database Error: Data fetching failded.')
         }
@@ -95,12 +103,16 @@ export default function HomePage() {
     fetchData()
   }, [])
 
-  // if (stats.length === 0) return <div>Loading...</div>
+  useEffect(() => {
+    if (freshCounter === 0) return
+    fetchData()
+  }, [freshCounter])
+
   return (
     <>
       <SecondNavbar></SecondNavbar>
 
-      <HeroSection></HeroSection>
+      <SectionHero></SectionHero>
 
       <SectionWords></SectionWords>
 

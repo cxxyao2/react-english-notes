@@ -22,10 +22,10 @@ function Layout() {
   const { currentUser, signOut } = useAuth()
   const [user, setUser] = useState('')
   useEffect(() => {
-    const email:string = currentUser?.email || ''
+    const email: string = currentUser?.email || ''
     const index = email.indexOf('@')
-    let name=''
-    index>=0 && (name = email.slice(0,index))
+    let name = ''
+    index >= 0 && (name = email.slice(0, index))
     setUser(() => name)
   }, [currentUser])
 
@@ -36,7 +36,7 @@ function Layout() {
         {topError && (
           <div
             className='position-fixed left-0 w-100'
-            style={{ zIndex: 9999, top: '56px' }}>
+            style={{ zIndex: 2000, top: '56px' }}>
             <div
               className='toast show align-items-center w-100 bg-white px-3'
               role='alert'
@@ -82,17 +82,17 @@ function Layout() {
                 aria-label='Menu Section'>
                 <div className='d-flex flex-row'>
                   <div className='d-none d-md-flex flex-grow-1 justify-content-center'>
-                   <Link to="/search">
-                    <button
-                      type='button'
-                      className='relative border-1 border-white border-md-1 border-md-white rounded  bg-transparent mx-4'
-                      style={{ top: '-2px' }}>
-                      <MagnifyingGlassIcon
-                        width={24}
-                        height={24}
-                        className='text-white'></MagnifyingGlassIcon>
-                      <span className='ms-2 text-white'>Search</span>
-                    </button>
+                    <Link to='/search'>
+                      <button
+                        type='button'
+                        className='relative border-1 border-white border-md-1 border-md-white rounded  bg-transparent mx-4'
+                        style={{ top: '-2px' }}>
+                        <MagnifyingGlassIcon
+                          width={24}
+                          height={24}
+                          className='text-white'></MagnifyingGlassIcon>
+                        <span className='ms-2 text-white'>Search</span>
+                      </button>
                     </Link>
                   </div>
                   <ul className='nav d-flex  flex-row align-items-center justify-content-end'>

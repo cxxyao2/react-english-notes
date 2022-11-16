@@ -1,7 +1,6 @@
 import { Note } from 'models/note'
 import { Stats } from 'models/stats'
 
-
 // 6 columns
 export const initNavbarData: Stats[] = [
   { name: 'Culture', mastered: 0, unmastered: 0 },
@@ -23,32 +22,27 @@ export const initCardData: Note[] = [
       'Historic scenes of jubiliation in Kherson following the city"s liberation from Russia occupation.',
     industry: 'IT',
     mastered: false,
-    hitCounter: 11,
-    sequence: 1
+    hitCounter: 11
   },
   {
     language: 'en',
     category: 'word',
     keyword: 'migrate',
     created: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
-    content:
-      'Where are they migrating to?',
+    content: 'Where are they migrating to?',
     industry: 'IT',
     mastered: false,
-    hitCounter: 11,
-    sequence: 2
+    hitCounter: 11
   },
   {
     language: 'en',
     category: 'word',
     keyword: 'Ukraine',
     created: new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1),
-    content:
-      'Business Ukraine magazine is an independent quarterly journal.',
+    content: 'Business Ukraine magazine is an independent quarterly journal.',
     industry: 'IT',
     mastered: false,
-    hitCounter: 11,
-    sequence: 3
+    hitCounter: 11
   }
 ]
 
@@ -63,19 +57,16 @@ export const initTopicData: Note[] = [
       'Historic scenes of jubiliation in Kherson following the city"s liberation from Russia occupation.',
     industry: 'IT',
     mastered: false,
-    hitCounter: 11,
-    sequence: 1
+    hitCounter: 11
   },
   {
     language: 'en',
     category: 'word',
     keyword: 'migrate',
     created: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
-    content:
-      'Where are they migrating to?',
+    content: 'Where are they migrating to?',
     industry: 'IT',
     mastered: false,
-    hitCounter: 11,
-    sequence: 2
-  },
+    hitCounter: 11
+  }
 ]

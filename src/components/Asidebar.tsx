@@ -1,4 +1,4 @@
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { GlobeAmericasIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuth } from 'contexts/AuthContext'
 import { signOut } from 'firebase/auth'
 import { useEffect, useRef, useState } from 'react'
@@ -29,8 +29,10 @@ const Asidebar = () => {
       aria-labelledby='sidebarLabel'
       style={{ width: '280px' }}>
       <div className='offcanvas-header border-bottom'>
-        <h5 className='offcanvas-title' id='sidebarLabel'>
-          English
+        <h5 className='offcanvas-title text-monospace' id='sidebarLabel'>
+          <GlobeAmericasIcon width={32} height={32} className="text-primary"></GlobeAmericasIcon>
+          Hello {user?user:''}
+
         </h5>
         <button
           ref={closeRef}
@@ -71,6 +73,18 @@ const Asidebar = () => {
               closeRef?.current?.click()
             }}>
             <MyNavLink
+              to='/search'
+              className='nav-link'
+              activeClassName='nav-link active'>
+              Search
+            </MyNavLink>
+          </li>
+          <li
+            className='nav-item'
+            onClick={() => {
+              closeRef?.current?.click()
+            }}>
+            <MyNavLink
               to='/about'
               className='nav-link'
               activeClassName='nav-link active'>
@@ -78,7 +92,6 @@ const Asidebar = () => {
             </MyNavLink>
           </li>
           <hr />
-          <li className='nav-item'><a className='nav-link text-dark'>Hello, {user}</a></li>
           <li
             className='nav-item'
             onClick={() => {
