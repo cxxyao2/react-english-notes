@@ -37,12 +37,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   const signup = async (email: string, password: string) => {
-    console.log(' signup called', email, password)
     return await createUserWithEmailAndPassword(auth, email, password)
   }
 
   const login = async (email: string, password: string) => {
-    console.log(' login called', email, password)
     return signInWithEmailAndPassword(auth, email, password)
   }
 

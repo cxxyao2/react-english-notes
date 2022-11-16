@@ -28,7 +28,6 @@ export default function HomePage() {
   const dataFetchRef = useRef(false)
 
   const fetchData = () => {
-    console.log(`hi, fetchData is called ${freshCounter} times`)
     setIsLoading(true)
     getAllStats()
       .then((data) => {
@@ -76,9 +75,6 @@ export default function HomePage() {
         newTopics.sort((a, b) => a.created.getTime() - b.created.getTime())
 
         if (newStats.length > 0) {
-          console.log('new stats', newStats)
-          console.log('new cards', newCards)
-          console.log('new topics', newTopics)
           setSectionNavbarData(() => newStats)
           setSectionCardData(() => newCards)
           setSectionTopicData(() => newTopics)

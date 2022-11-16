@@ -52,7 +52,7 @@ $env:variable='varialbe-value'
 - npm run start
 - npm run build
 - npx serve -s build
-  windows11 chrome ctrl + shift + n : open a new incognito tab
+- windows11 chrome:  ctrl + shift + n : open a new incognito tab
 
 ## Screenshots
 

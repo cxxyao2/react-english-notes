@@ -93,16 +93,15 @@ const MarkdownEditor = () => {
             ...newNote,
             initId: id
           }).then(() => {
-             setFreshCounter((pre) => pre + 1)
-             navigate('/')
+            setFreshCounter((pre) => pre + 1)
+            navigate('/')
           })
         } else {
-           setFreshCounter((pre) => pre + 1)
-           navigate('/')
+          setFreshCounter((pre) => pre + 1)
+          navigate('/')
         }
       })
     }
-
   }
 
   const onSubmit = (data: any) => {
@@ -139,7 +138,6 @@ const MarkdownEditor = () => {
         if (note1.category === 'word') {
           updateSectionWord(newId, note1)
         }
-
       })
       .catch((error) => {
         let message = getMessageOfError(error)

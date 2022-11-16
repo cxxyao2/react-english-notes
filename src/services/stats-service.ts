@@ -35,8 +35,4 @@ export const updateStats = async (
 // get all documents in a collection
 export const getAllStats = async () => {
   return await getDocs(collection(db, 'stats'))
-  // querySnapshot.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.id, ' => ', doc.data())
-  // })
 }

@@ -31,7 +31,6 @@ const SectionWords = () => {
   const { sectionNavbarData: stats } = useSearch()
 
   useEffect(() => {
-    console.log('hi, word section will be updated')
     if (stats && stats.length > 0) {
       setData(stats.slice(0, 3))
     }

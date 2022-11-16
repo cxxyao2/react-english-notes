@@ -85,12 +85,10 @@ export const getAllNotes = async () => {
 }
 
 export const deleteOneNote = async (id: string) => {
-  console.log('deleting id is', id)
   return await deleteDoc(doc(db, 'notes', id))
 }
 
 export const updateNote = async (id: string, newNote: Partial<Note>) => {
-  console.log('hi,uppdateNOte', newNote)
   const docRef = doc(db, 'notes', id)
   return await updateDoc(docRef, newNote)
 }
