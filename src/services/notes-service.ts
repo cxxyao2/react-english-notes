@@ -38,9 +38,10 @@ export const getFirstUnknownNote = async (
   current.forEach((ele) => idArray.push(ele.id!))
   const firstNote = allUnmaster.find((ele) => !idArray.includes(ele.id))
 
-  if (firstNote) return getNoteFromDocument(firstNote.data, firstNote.id)
+  if (firstNote)
+    return Promise.resolve(getNoteFromDocument(firstNote.data, firstNote.id))
 
-  return null
+  return Promise.resolve(null)
 }
 
 export const getNoteFromDocument = (doc: DocumentData, id: string): Note => {
