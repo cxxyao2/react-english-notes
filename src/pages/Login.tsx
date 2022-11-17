@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -22,7 +22,6 @@ export default function Login() {
   const formOptions = { resolver: yupResolver(validationSchema) }
   const { register, handleSubmit, reset, formState } = useForm(formOptions)
   const { errors } = formState
-  const [loading, setLoading] = useState(false)
   const { login } = useAuth()
   const [errorFromServer, setErrorFromServer] = useState<string | null>(null)
 

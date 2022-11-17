@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { getOneNote, updateNote } from 'services/notes-service'
 import { Note } from 'models/note'
-import { Link, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import rehypeSanitize from 'rehype-sanitize'
 import { EyeIcon } from '@heroicons/react/24/outline'
 

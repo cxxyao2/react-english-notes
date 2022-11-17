@@ -1,10 +1,7 @@
 import {
   Bars3Icon,
   GlobeAltIcon,
-  HeartIcon,
-  MagnifyingGlassCircleIcon,
-  MagnifyingGlassIcon,
-  MagnifyingGlassPlusIcon
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import Asidebar from 'components/Asidebar'
 import Footer from 'components/Footer'
@@ -135,7 +132,7 @@ function Layout() {
                       <li className='nav-item'>
                         <a
                           className={className}
-                          href='#'
+                          href='# '
                           onClick={() => signOut()}>
                           {user} &nbsp; Logout
                         </a>

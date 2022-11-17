@@ -1,4 +1,3 @@
-import { Stats } from 'models/stats'
 import { useSearch } from 'contexts/SearchContext'
 import { initNavbarData } from '../constants'
 import { useEffect, useState } from 'react'
@@ -6,11 +5,11 @@ import { useEffect, useState } from 'react'
 const SectionSecondbar = () => {
   const [data, setData] = useState(initNavbarData)
   const { sectionNavbarData: stats } = useSearch()
-  useEffect(()=>{
-    if(stats && stats.length > 0) {
+  useEffect(() => {
+    if (stats && stats.length > 0) {
       setData(stats)
     }
-  },[stats])
+  }, [stats])
 
   return (
     <div className='nav-scroller row bg-body  shadow-sm'>
@@ -21,7 +20,7 @@ const SectionSecondbar = () => {
               key={stat.name}
               className='nav-link active'
               aria-current='page'
-              href='#'>
+              href='# '>
               {stat.name}
               <span className='badge text-bg-info rounded-pill align-text-bottom'>
                 {stat.unmastered}

@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   User,
-  updateEmail,
   updatePassword
 } from 'firebase/auth'
 import React, { useContext, ReactNode, useState, useEffect } from 'react'
@@ -23,10 +22,10 @@ interface AuthContextType {
 
 export const AuthContext = React.createContext<AuthContextType>({
   currentUser: null,
-  signup: async (email, password) => null,
-  login: async (email, password) => null,
+  signup: async () => null,
+  login: async () => null,
   signOut: () => {},
-  resetPassword: (email: string) => {}
+  resetPassword: () => {}
 })
 
 export function useAuth() {

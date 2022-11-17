@@ -1,13 +1,7 @@
-import { GlobeAmericasIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { GlobeAmericasIcon } from '@heroicons/react/24/outline'
 import { useAuth } from 'contexts/AuthContext'
-import { signOut } from 'firebase/auth'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import MyNavLink from './MyNavLink'
-
-// type IProps = React.PropsWithChildren<{
-//   onClick: () => void
-// }>
 
 const Asidebar = () => {
   const { currentUser, signOut } = useAuth()
@@ -30,9 +24,11 @@ const Asidebar = () => {
       style={{ width: '280px' }}>
       <div className='offcanvas-header border-bottom'>
         <h5 className='offcanvas-title text-monospace' id='sidebarLabel'>
-          <GlobeAmericasIcon width={32} height={32} className="text-primary"></GlobeAmericasIcon>
-          Hello {user?user:''}
-
+          <GlobeAmericasIcon
+            width={32}
+            height={32}
+            className='text-primary'></GlobeAmericasIcon>
+          Hello {user ? user : ''}
         </h5>
         <button
           ref={closeRef}

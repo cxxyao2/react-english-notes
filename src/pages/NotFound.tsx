@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function NotFound() {
@@ -6,7 +5,7 @@ export default function NotFound() {
     <div className='d-flex rounded-2 text-center'>
       Not Found. Please check your url or go to &nbsp;
       <Link to='/'>
-        <a>HomePage</a>
+        <span>HomePage</span>
       </Link>
     </div>
   )

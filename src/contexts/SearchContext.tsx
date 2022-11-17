@@ -11,8 +11,7 @@ import {
   query,
   where,
   getDocs,
-  doc,
-  getDoc,
+
   DocumentData,
   Query
 } from 'firebase/firestore'

@@ -35,7 +35,7 @@ const SectionTopics = () => {
                         {ele.industry.toUpperCase()}
                       </strong>
 
-                      <h3 className='mb-0'>
+                      <h3 className='mb-0 text-truncate' style={{width:'150px'}}>
                         {ele.keyword
                           .charAt(0)
                           .toUpperCase()
@@ -59,7 +59,7 @@ const SectionTopics = () => {
                         width='200px'
                         height={'250px'}
                         style={{ objectFit: 'cover' }}
-                        alt='topic image'
+                        alt='topic'
                       />
                     </div>
                   </div>

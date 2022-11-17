@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { addNote } from 'services/notes-service'
 import { Note } from 'models/note'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getMessageOfError } from 'utils'
 import { useSearch } from 'contexts/SearchContext'
 import { updateStats } from 'services/stats-service'
@@ -43,8 +43,6 @@ const MarkdownEditor = () => {
     const year = today.getFullYear().toString()
     const month = (today.getMonth() + 1).toString().padStart(2, '0')
     const day = today.getDate().toString().padStart(2, '0')
-    const min = today.getMinutes().toString().padStart(2, '0')
-    const sec = today.getSeconds().toString().padStart(2, '0')
     if (inputDateRef && inputDateRef.current) {
       inputDateRef.current.value = year + '-' + month + '-' + day
     }
@@ -85,21 +83,22 @@ const MarkdownEditor = () => {
       let newStat = {
         unmastered: stat.unmastered > 0 ? stat.unmastered + 1 : 1
       }
-      // TODO. PROMISE all,
-      updateStats(stat.id!, newStat).then(() => {
-        const nullCard = sectionCardData.find((ele) => !ele.initId)
-        if (nullCard) {
-          updateStats(nullCard.id!, {
-            ...newNote,
-            initId: id
-          }).then(() => {
-            setFreshCounter((pre) => pre + 1)
-            navigate('/')
-          })
-        } else {
-          setFreshCounter((pre) => pre + 1)
-          navigate('/')
-        }
+
+      const nullCard = sectionCardData.find((ele) => !ele.initId)
+      const p1 = updateStats(stat.id!, newStat)
+      let p2: Promise<void>
+      if (nullCard) {
+        p2 = updateStats(nullCard.id!, {
+          ...newNote,
+          initId: id
+        })
+      } else {
+        p2 = Promise.resolve()
+      }
+
+      Promise.all([p1, p2]).then(() => {
+        setFreshCounter((pre) => pre + 1)
+        navigate('/')
       })
     }
   }
@@ -272,6 +271,3 @@ const MarkdownEditor = () => {
 }
 
 export default MarkdownEditor
-function setNote(oldData: Note) {
-  throw new Error('Function not implemented.')
-}

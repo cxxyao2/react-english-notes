@@ -11,13 +11,15 @@
 - React
 - Typescript
 - Bootstrap 5
-- Markdown Editor : @uiw/react-md-editor
+- Markdown Editor : @uiw/react-md-editor . Edit / Update
 - React-router-dom v6
-- Protected routes
+- Protected routes: redirect to login form if not logged in
 - Markdown Display: Markdown to JSX
 - Yup, React-hook-form
-- database: Firestore database (attention: ≠ Realtime database)
-- authentication: email-password
+- Database: Firestore database (attention: ≠ Realtime database)
+- Authentication: email-password
+- Dynamically rendering an array of Components
+- Composition takes precedence over mutation,e.g. use forwardRef to add custom style to react router link
 - tsconfig.json: absolute imports
 - Modify webpack.config.js without eject using @craco/craco
 - analyzer and compress bundled files after building
@@ -52,7 +54,7 @@ $env:variable='varialbe-value'
 - npm run start
 - npm run build
 - npx serve -s build
-- windows11 chrome:  ctrl + shift + n : open a new incognito tab
+- windows11 chrome: ctrl + shift + n : open a new incognito tab
 
 ## Screenshots
 

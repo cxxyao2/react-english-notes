@@ -37,7 +37,7 @@ export default function GenreCard({ item }: CardProps) {
       <img
         src='//unsplash.it/300/300'
         className='card-img-top'
-        alt='note image'
+        alt='note'
         width={260}
         height={200}
         object-fit='cover'

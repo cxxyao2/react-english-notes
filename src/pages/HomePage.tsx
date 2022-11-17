@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSearch } from 'contexts/SearchContext'
 import { getAllStats } from 'services/stats-service'
 import { Stats } from 'models/stats'
@@ -12,15 +12,10 @@ import { Note } from 'models/note'
 
 export default function HomePage() {
   const {
-    isLoading,
     setIsLoading,
-    topError,
     setTopError,
-    sectionCardData,
     setSectionCardData,
-    sectionTopicData,
     setSectionNavbarData,
-    sectionNavbarData,
     setSectionTopicData,
     freshCounter
   } = useSearch()
@@ -95,11 +90,13 @@ export default function HomePage() {
     if (dataFetchRef.current) return
     dataFetchRef.current = true
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (freshCounter === 0) return
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [freshCounter])
 
   return (

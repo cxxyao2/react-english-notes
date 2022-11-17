@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
+import { useState } from 'react'
 
 import { useSearch } from 'contexts/SearchContext'
 import SearchForm from '../components/SearchForm'
@@ -47,7 +46,9 @@ export default function SearchResult() {
         ))}
       </div>
       <br className='bg-info border-t-2' />
-      <div className='border-top border-info bg-white rounded-2' style={{minHeight:'300px'}}>
+      <div
+        className='border-top border-info bg-white rounded-2'
+        style={{ minHeight: '300px' }}>
         <div className='row p-2 g-2 '>
           {results &&
             results
@@ -70,7 +71,4 @@ export default function SearchResult() {
       </div>
     </div>
   )
-}
-function setState(arg0: string): [any, any] {
-  throw new Error('Function not implemented.')
 }

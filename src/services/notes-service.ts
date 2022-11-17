@@ -6,11 +6,8 @@ import {
   where,
   doc,
   addDoc,
-  setDoc,
   getDoc,
   getDocs,
-  orderBy,
-  limit,
   DocumentData,
   updateDoc
 } from 'firebase/firestore'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSearch } from 'contexts/SearchContext'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
@@ -23,7 +23,7 @@ export default function SearchForm() {
           className='form-control'
           aria-label='Search Criteria'
           onKeyDown={(event) => {
-           
+
             if (event.code === 'Enter' || event.code === 'Tab') {
               handleKeyDown(event)
             }
