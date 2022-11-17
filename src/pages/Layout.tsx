@@ -35,7 +35,7 @@ function Layout() {
             className='position-fixed left-0 w-100'
             style={{ zIndex: 2000, top: '56px' }}>
             <div
-              className='toast show align-items-center w-100 bg-white px-3'
+              className='toast show align-items-center w-100 bg-white px-3 text-danger'
               role='alert'
               aria-live='assertive'
               aria-atomic='true'>
@@ -147,7 +147,7 @@ function Layout() {
 
         <Asidebar></Asidebar>
 
-        <main style={{ minHeight: '300px' }}>
+        <main style={{ minHeight: '70vh' }}>
           <Outlet />
         </main>
 

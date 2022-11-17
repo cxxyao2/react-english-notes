@@ -38,23 +38,24 @@ function App() {
                     </React.Suspense>
                   }
                 />
+                <Route
+                  path=':id'
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <DisplayPage />
+                    </React.Suspense>
+                  }
+                />
               </Route>
+
               <Route
-                path='/display/:id'
+                path='/search'
                 element={
                   <React.Suspense fallback={<div>Loading...</div>}>
-                    <DisplayPage />
+                    <SearchPage />
                   </React.Suspense>
                 }
               />
-              <Route
-              path='/search'
-              element={
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  <SearchPage />
-                </React.Suspense>
-              }
-            />
 
               <Route
                 path='/login'

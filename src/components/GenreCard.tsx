@@ -56,7 +56,7 @@ export default function GenreCard({ item }: CardProps) {
           {item.content.slice(0, 100)}...
         </p>
         <div className=''>
-          <Link to={`/display/${item.id}`} className='btn btn-primary '>
+          <Link to={`/edit/${item.id}`} className='btn btn-primary '>
             Read more ...
           </Link>
         </div>

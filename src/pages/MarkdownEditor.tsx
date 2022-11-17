@@ -86,14 +86,12 @@ const MarkdownEditor = () => {
 
       const nullCard = sectionCardData.find((ele) => !ele.initId)
       const p1 = updateStats(stat.id!, newStat)
-      let p2: Promise<void>
+      let p2: Promise<void> = Promise.resolve()
       if (nullCard) {
         p2 = updateStats(nullCard.id!, {
           ...newNote,
           initId: id
         })
-      } else {
-        p2 = Promise.resolve()
       }
 
       Promise.all([p1, p2]).then(() => {

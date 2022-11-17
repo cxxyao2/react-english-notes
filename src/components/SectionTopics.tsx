@@ -48,7 +48,7 @@ const SectionTopics = () => {
                         {ele.content.slice(0, 30)}...
                       </p>
                       <Link
-                        to={`/display/${ele.initId}`}
+                        to={`/edit/${ele.initId}`}
                         className='stretched-link'>
                         Continue reading
                       </Link>

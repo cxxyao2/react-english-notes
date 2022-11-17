@@ -25,23 +25,20 @@ export const addNote = async (note: Note) => {
 export const getFirstUnknownNote = async (
   current: Note[]
 ): Promise<Note | null> => {
-  const q = query(collection(db, 'notes'), where('mastered', '==', false))
+  const q = query(
+    collection(db, 'notes'),
+    where('mastered', '==', false),
+    where('category', '==', 'word')
+  )
   const docSnamp = await getDocs(q)
-  let firstNote: DocumentData | null = null
-  let firstDate: Date | null = null
-  let id = ''
-  docSnamp.forEach((doc) => {
-    if (!firstDate || (firstDate && doc.data().created.toDate() < firstDate)) {
-      firstDate = doc.data().created.toDate()
-      firstNote = doc.data()
-      id = doc.id
-      const found = current.find((cur) => cur.initId === id)
-      if (found) {
-        firstNote = null
-      }
-    }
-  })
-  if (firstNote) return getNoteFromDocument(firstNote, id)
+  let allUnmaster: { id: string; data: DocumentData }[] = []
+  docSnamp.forEach((doc) => allUnmaster.push({ id: doc.id, data: doc.data() }))
+
+  const idArray: string[] = []
+  current.forEach((ele) => idArray.push(ele.id!))
+  const firstNote = allUnmaster.find((ele) => !idArray.includes(ele.id))
+
+  if (firstNote) return getNoteFromDocument(firstNote.data, firstNote.id)
 
   return null
 }
