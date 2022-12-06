@@ -112,7 +112,7 @@ export function SearchContextProvider({
         language: docData.language,
         category: docData.category,
         keyword: docData.keyword,
-        created: new Date(docData.created.toDate()),
+        created: (docData.created.toDate() as Date).getTime(),
         content: docData.content,
         industry: docData.industry,
         mastered: docData.mastered || false,

@@ -70,7 +70,7 @@ export default function MarkdownDisplay() {
 
         <div className='mb-1'>
           <label className='form-label  fw-semibold'>Created:</label>
-          <div className='form-label'>{note?.created.toLocaleString()}</div>
+          <div className='form-label'>{ new Date(note!.created).toLocaleString()}</div>
         </div>
         <br className='border-t-2  border-info' />
 

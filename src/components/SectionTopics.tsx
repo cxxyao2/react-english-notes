@@ -42,7 +42,7 @@ const SectionTopics = () => {
                           .concat(ele.keyword.slice(1))}
                       </h3>
                       <div className='mb-1 text-muted'>
-                        {ele.created.toDateString()}
+                        {new Date(ele.created).toDateString()}
                       </div>
                       <p className='card-text mb-auto'>
                         {ele.content.slice(0, 30)}...

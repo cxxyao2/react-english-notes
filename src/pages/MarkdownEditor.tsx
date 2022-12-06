@@ -69,7 +69,7 @@ const MarkdownEditor = () => {
 
   const updateSectionTopic = (id: string, newNote: Note) => {
     const sorted = [...sectionTopicData]
-    sorted.sort((a, b) => a.created.getTime() - b.created.getTime())
+    sorted.sort((a, b) => (a.created > b.created ? -1 : 1))
 
     if (sorted && sorted[0].id) {
       const newTopic = { ...newNote, initId: id }
@@ -123,7 +123,7 @@ const MarkdownEditor = () => {
       category: data.category,
       keyword: data.keyword,
       industry: data.industry,
-      created: newCreated,
+      created: newCreated.getTime(),
       content: content || '',
       mastered: false,
       hitCounter: 1

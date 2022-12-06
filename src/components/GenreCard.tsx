@@ -44,7 +44,7 @@ export default function GenreCard({ item }: CardProps) {
           {Array.isArray(item.keyword) ? item.keyword.join(' ') : item.keyword}
         </h5>
         <div className='fw-light mb-1' style={{ fontSize: '14px' }}>
-          {item.created.toLocaleDateString()}
+          {new Date(item.created).toLocaleDateString()}
         </div>
         <p className='flex-grow-1 card-text mb-1'>
           <span

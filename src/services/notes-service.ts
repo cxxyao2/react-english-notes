@@ -53,7 +53,7 @@ export const getNoteFromDocument = (
     language: doc.language || 'en',
     category: 'word',
     keyword: doc.keyword,
-    created: doc.created.toDate() || new Date(),
+    created: (doc.created.toDate() as Date).getTime() || new Date().getTime(),
     content: doc.content,
     industry: doc.industry || 'IT',
     mastered: doc.mastered || false,

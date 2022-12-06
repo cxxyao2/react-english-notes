@@ -14,14 +14,7 @@ const SectionHero = () => {
   const navigate = useNavigate()
   const { sectionCardData, sectionNavbarData, setFreshCounter } = useSearch()
 
-  const stats = useAppSelector(selectAllCards)
-
-  const [data, setData] = useState(initCardData)
-  useEffect(() => {
-    if (stats && stats.length > 0) {
-      setData(stats.slice(0, 3))
-    }
-  }, [stats])
+  const data = useAppSelector(selectAllCards)
 
   const onDismiss = async (currentNote: Note) => {
     // 1, update Note table
@@ -63,15 +56,15 @@ const SectionHero = () => {
 
   return (
     <div className='ds-card-grid'>
-      {data.map((ele,index) => (
-        <div key={index} className='ds-card'>
+      {data.map((ele, index) => (
+        <div key={ele.id} className='ds-card'>
           <div className='img-wrapper'>
             <img loading='lazy' src={topicImg} alt='word image' />
           </div>
           <div className='mt-1 mb-2 p-1'>
             <div className='' style={{ fontSize: '12px' }}>
               {ele.initId
-                ? ele.created.toDateString()
+                ? new Date(ele.created).toDateString()
                 : new Date().toDateString()}{' '}
             </div>
             <div style={{ maxWidth: '200px' }} className='text-truncate'>

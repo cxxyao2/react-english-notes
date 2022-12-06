@@ -10,7 +10,7 @@
 
 - React
 - Redux.Redux Toolkit. Typed dispatch and typed selector
-- Redux: Ayncthunk function.Extra reducers
+- Redux: Ayncthunk function.Extra reducers. Save timestamp of Date object for serialization.
 - Typescript
 - Bootstrap 5
 - Markdown Editor : @uiw/react-md-editor . Edit / Update

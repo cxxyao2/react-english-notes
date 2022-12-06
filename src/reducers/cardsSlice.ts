@@ -30,7 +30,7 @@ export const fetchCards = createAsyncThunk('cards/fetchCards', async () => {
     cards.push(note)
   })
 
-  cards.sort((a, b) => (a.created.getTime() > b.created.getTime() ? -1 : 1))
+  cards.sort((a, b) => (a.created > b.created ? -1 : 1))
   return cards
 })
 

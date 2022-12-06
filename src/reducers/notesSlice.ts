@@ -47,7 +47,7 @@ export const fetchNotes = createAsyncThunk('notes/fetchCards', async () => {
       language: doc.data().language || 'en',
       category: 'word',
       keyword: doc.data().keyword,
-      created: doc.data().created.toDate() || new Date(),
+      created: (doc.data().created.toDate() as Date).getTime() || new Date().getTime(),
       content: doc.data().content,
       industry: doc.data().industry || 'IT',
       mastered: doc.data().mastered || false,
@@ -57,7 +57,7 @@ export const fetchNotes = createAsyncThunk('notes/fetchCards', async () => {
     })
   })
 
-  cards.sort((a, b) => (a.created.getTime() > b.created.getTime() ? -1 : 1))
+  cards.sort((a, b) => (a.created > b.created ? -1 : 1))
   return cards
 })
 export const { noteAdded, noteDeleted, noteUPdated } = NotesSlice.actions
