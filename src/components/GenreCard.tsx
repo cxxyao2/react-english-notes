@@ -12,9 +12,7 @@ export default function GenreCard({ item }: CardProps) {
   const { results, setResults } = useSearch()
   const categoryColor = item.category === 'word' ? 'text-info' : 'text-warning'
   return (
-    <div
-      className='card shadow position-relative overflow-hidden'
-      style={{ minWidth: '18em', minHeight: '18em' }}>
+    <div className='card shadow position-relative overflow-hidden'>
       <div
         className={`position-absolute top-0 start-0   px-2 py-1  ${categoryColor}`}>
         {item.category}
@@ -25,7 +23,7 @@ export default function GenreCard({ item }: CardProps) {
           if (window.confirm('Are you sure to delete the record?') !== true) {
             return
           }
-          deleteOneNote(item.id || "").then()
+          deleteOneNote(item.id || '').then()
           const newNoteList = results?.filter(
             (element) => element.id !== item.id
           )
@@ -37,13 +35,14 @@ export default function GenreCard({ item }: CardProps) {
       <img
         src='//unsplash.it/300/300'
         className='card-img-top'
+        height={100}
         alt='note'
-        width={260}
-        height={200}
         object-fit='cover'
       />
       <div className='card-body text-start d-flex flex-column align-items-stretch'>
-        <h5 className='card-title mb-1'>{Array.isArray(item.keyword)?item.keyword.join(' '):item.keyword}</h5>
+        <h5 className='card-title mb-1'>
+          {Array.isArray(item.keyword) ? item.keyword.join(' ') : item.keyword}
+        </h5>
         <div className='fw-light mb-1' style={{ fontSize: '14px' }}>
           {item.created.toLocaleDateString()}
         </div>

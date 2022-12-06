@@ -48,11 +48,11 @@ const SectionWords = () => {
           <div>
             <IconName
               className='text-primary'
-              width={32}
-              height={32}></IconName>
+              width={24}
+              height={24}></IconName>
           </div>
-          <div className='flex-grow-1 text-muted p-2' key={stat.id}>
-            <div className='pb-3 mb-0 small lh-sm border-bottom w-100'>
+          <div className='flex-grow-1 text-muted p-1' key={stat.id}>
+            <div className='pb-2 mb-0 small lh-sm border-bottom w-100'>
               <div className='d-flex justify-content-between'>
                 <strong className='text-gray-dark'>{stat.name}</strong>
                 <button className='btn btn-sm btn-primary btn rounded-pill'>
@@ -60,7 +60,7 @@ const SectionWords = () => {
                 </button>
               </div>
               <span className='d-block'>
-                Need to learn: {stat.unmastered}
+                new: {stat.unmastered}
               </span>
             </div>
           </div>

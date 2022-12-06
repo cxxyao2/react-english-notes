@@ -11,6 +11,7 @@ export interface Note {
   mastered: Boolean
   hitCounter:number
   initId?:string
+  updated?:Date
   id?: string
 
 }

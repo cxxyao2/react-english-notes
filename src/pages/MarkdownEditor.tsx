@@ -43,12 +43,15 @@ const MarkdownEditor = () => {
     const year = today.getFullYear().toString()
     const month = (today.getMonth() + 1).toString().padStart(2, '0')
     const day = today.getDate().toString().padStart(2, '0')
+    const minutes = today.getMinutes().toString().padStart(2, '0')
+    const seconds = today.getSeconds().toString().padStart(2, '0')
+
     if (inputDateRef && inputDateRef.current) {
       inputDateRef.current.value = year + '-' + month + '-' + day
     }
 
     if (inputTimeRef && inputTimeRef.current) {
-      inputTimeRef.current.value = '01:01'
+      inputTimeRef.current.value = `${minutes}:${seconds}`
     }
 
     const keyupEvent = (event: KeyboardEvent) => {

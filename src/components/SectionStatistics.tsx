@@ -39,7 +39,7 @@ const SectionStatistics = () => {
                 <th>UnMastered</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {stats && stats.map((stat) => (
                 <tr key={stat.name}>
                   <td>{stat.name}</td>

@@ -37,22 +37,7 @@ export default function HomePage() {
               mastered: doc.data().mastered,
               unmastered: doc.data().unmastered
             })
-          doc.data().section === 'card' &&
-            newCards.push({
-              language: doc.data().language || 'en',
-              category: 'word',
-              keyword: doc.data().keyword,
-              created: doc.data().created.toDate() || new Date(),
-              content: doc.data().content,
-              industry: doc.data().industry || 'IT',
-              mastered: doc.data().mastered || false,
-              hitCounter: doc.data().hitCounter || 1,
-              id: doc.id,
-              initId: doc.data().initId
-            })
-
-          newCards.sort((a, b) => a.created.getTime() - b.created.getTime())
-
+         
           doc.data().section === 'topic' &&
             newTopics.push({
               language: doc.data().language || 'en',

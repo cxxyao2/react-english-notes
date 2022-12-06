@@ -1,6 +1,6 @@
 .ds-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   margin: 4px;
 }
 
@@ -23,13 +23,13 @@
 }
 
 .ds-card-grid .ds-card img {
-  width: 293px;
+  width: 210px;
   height: 100px;
   object-fit: cover;
 }
 
 @media screen and (min-width: 768px) {
   .ds-card-grid .ds-card img {
-    width: 218px;
+    width: 260px;
   }
 }
