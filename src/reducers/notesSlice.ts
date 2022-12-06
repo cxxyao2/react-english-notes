@@ -7,16 +7,16 @@ import { Note } from 'models/note'
 
 // Define a type for the slice state
 interface NotesState {
-  data: Note[]
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null
+  data: Note[]
 }
 
 // Define the initial state using that type
 const initialState: NotesState = {
-  data: [],
   status: 'idle',
-  error: null
+  error: null,
+  data: [],
 }
 
 export const NotesSlice = createSlice({
@@ -63,8 +63,8 @@ export const fetchNotes = createAsyncThunk('notes/fetchCards', async () => {
 export const { noteAdded, noteDeleted, noteUPdated } = NotesSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectAllNotes = (state: RootState) => state.Notes
-export const selectNoteById = (state: RootState) => state.Notes
+export const selectAllNotes = (state: RootState) => state.notes
+export const selectNoteById = (state: RootState) => state.notes
 // export const selectAllNotes = (state: RootState) => state.Notes
 
 export default NotesSlice.reducer

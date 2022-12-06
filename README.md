@@ -9,6 +9,7 @@
 ## Framework and 3rd libraries
 
 - React
+- Redux.Redux Toolkit. Typed dispatch and typed selector
 - Typescript
 - Bootstrap 5
 - Markdown Editor : @uiw/react-md-editor . Edit / Update
