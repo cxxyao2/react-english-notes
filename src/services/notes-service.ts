@@ -44,7 +44,11 @@ export const getFirstUnknownNote = async (
   return Promise.resolve(null)
 }
 
-export const getNoteFromDocument = (doc: DocumentData, id: string, initId?:string): Note => {
+export const getNoteFromDocument = (
+  doc: DocumentData,
+  id: string,
+  initId?: string
+): Note => {
   return {
     language: doc.language || 'en',
     category: 'word',

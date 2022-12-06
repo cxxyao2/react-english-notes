@@ -10,6 +10,7 @@
 
 - React
 - Redux.Redux Toolkit. Typed dispatch and typed selector
+- Redux: Ayncthunk function.Extra reducers
 - Typescript
 - Bootstrap 5
 - Markdown Editor : @uiw/react-md-editor . Edit / Update

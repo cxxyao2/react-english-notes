@@ -7,14 +7,15 @@ import { useNavigate } from 'react-router-dom'
 import { Note } from 'models/note'
 import { updateStats } from '../services/stats-service'
 import { getFirstUnknownNote, updateNote } from 'services/notes-service'
+import { useAppSelector } from 'hooks'
+import { selectAllCards } from 'reducers/cardsSlice'
 
 const SectionHero = () => {
   const navigate = useNavigate()
-  const {
-    sectionCardData: stats,
-    sectionNavbarData,
-    setFreshCounter
-  } = useSearch()
+  const { sectionCardData, sectionNavbarData, setFreshCounter } = useSearch()
+
+  const stats = useAppSelector(selectAllCards)
+
   const [data, setData] = useState(initCardData)
   useEffect(() => {
     if (stats && stats.length > 0) {
@@ -41,7 +42,7 @@ const SectionHero = () => {
     }
 
     // 3, update statistics table: replace a card
-    const currentCards = [...data].filter(ele=> ele.id!==currentNote.id)
+    const currentCards = [...data].filter((ele) => ele.id !== currentNote.id)
     const id = currentNote.id
     const p3 = getFirstUnknownNote(currentCards)
     Promise.all([p1, p2, p3]).then((result) => {
@@ -62,8 +63,8 @@ const SectionHero = () => {
 
   return (
     <div className='ds-card-grid'>
-      {data.map((ele) => (
-        <div key={ele.id} className='ds-card'>
+      {data.map((ele,index) => (
+        <div key={index} className='ds-card'>
           <div className='img-wrapper'>
             <img loading='lazy' src={topicImg} alt='word image' />
           </div>
