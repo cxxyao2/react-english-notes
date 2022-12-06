@@ -9,8 +9,11 @@ import SectionTopics from 'components/SectionTopics'
 import SectionHero from 'components/SectionHero'
 import { getMessageOfError } from 'utils'
 import { Note } from 'models/note'
+import { useAppDispatch, useAppSelector } from 'hooks'
 
 export default function HomePage() {
+  const dispatch = useAppDispatch()
+  const cards = useAppSelector(state=>state.cards.data)
   const {
     setIsLoading,
     setTopError,
@@ -24,51 +27,7 @@ export default function HomePage() {
 
   const fetchData = () => {
     setIsLoading(true)
-    getAllStats()
-      .then((data) => {
-        const newStats: Stats[] = []
-        const newCards: Note[] = []
-        const newTopics: Note[] = []
-        data.forEach((doc) => {
-          doc.data().section === 'navbar' &&
-            newStats.push({
-              id: doc.id,
-              name: doc.data().name,
-              mastered: doc.data().mastered,
-              unmastered: doc.data().unmastered
-            })
-         
-          doc.data().section === 'topic' &&
-            newTopics.push({
-              language: doc.data().language || 'en',
-              category: 'topic',
-              keyword: doc.data().keyword,
-              created: doc.data().created.toDate() || new Date(),
-              content: doc.data().content,
-              industry: doc.data().industry || 'IT',
-              mastered: doc.data().mastered || false,
-              hitCounter: doc.data().hitCounter || 1,
-              id: doc.id,
-              initId: doc.data().initId
-            })
-        })
-        newTopics.sort((a, b) => a.created.getTime() - b.created.getTime())
 
-        if (newStats.length > 0) {
-          setSectionNavbarData(() => newStats)
-          setSectionCardData(() => newCards)
-          setSectionTopicData(() => newTopics)
-        } else {
-          setTopError('Database Error: Data fetching failded.')
-        }
-      })
-      .catch((err) => {
-        const errorMessage = getMessageOfError(err)
-        setTopError(errorMessage)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
   }
 
   useEffect(() => {
