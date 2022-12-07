@@ -17,7 +17,7 @@ export const initCardData: Note[] = [
     language: 'en',
     category: 'word',
     keyword: 'jubiliation',
-    created: new Date(),
+    created: new Date().getTime(),
     content:
       'Historic scenes of jubiliation in Kherson following the city"s liberation from Russia occupation.',
     industry: 'IT',
@@ -28,7 +28,11 @@ export const initCardData: Note[] = [
     language: 'en',
     category: 'word',
     keyword: 'migrate',
-    created: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
+    created: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() - 1,
+      1
+    ).getTime(),
     content: 'Where are they migrating to?',
     industry: 'IT',
     mastered: false,
@@ -38,7 +42,11 @@ export const initCardData: Note[] = [
     language: 'en',
     category: 'word',
     keyword: 'Ukraine',
-    created: new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1),
+    created: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() - 2,
+      1
+    ).getTime(),
     content: 'Business Ukraine magazine is an independent quarterly journal.',
     industry: 'IT',
     mastered: false,
@@ -52,7 +60,7 @@ export const initTopicData: Note[] = [
     language: 'en',
     category: 'word',
     keyword: 'jubiliation',
-    created: new Date(),
+    created: new Date().getTime(),
     content:
       'Historic scenes of jubiliation in Kherson following the city"s liberation from Russia occupation.',
     industry: 'IT',
@@ -63,7 +71,11 @@ export const initTopicData: Note[] = [
     language: 'en',
     category: 'word',
     keyword: 'migrate',
-    created: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
+    created: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() - 1,
+      1
+    ).getTime(),
     content: 'Where are they migrating to?',
     industry: 'IT',
     mastered: false,

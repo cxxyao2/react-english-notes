@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-import { useSearch } from 'contexts/SearchContext'
 import SearchForm from '../components/SearchForm'
 import GenreCard from '../components/GenreCard'
+import { Note } from 'models/note'
 
 export default function SearchResult() {
-  const { results } = useSearch()
+  const results: Note[] = []
   const [industry, setIndustry] = useState('')
   const industryList = [
     'Finance',
@@ -15,6 +15,7 @@ export default function SearchResult() {
     'Sports',
     'Health'
   ]
+
   const industryClass = [
     'badge text-bg-primary',
     'badge text-bg-secondary',

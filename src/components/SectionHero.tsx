@@ -5,58 +5,77 @@ import { useEffect, useState } from 'react'
 import { useSearch } from 'contexts/SearchContext'
 import { useNavigate } from 'react-router-dom'
 import { Note } from 'models/note'
-import { updateStats } from '../services/stats-service'
-import { getFirstUnknownNote, updateNote } from 'services/notes-service'
-import { useAppSelector } from 'hooks'
-import { selectAllCards } from 'reducers/cardsSlice'
+
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { selectAllCards, fetchCards, updateCard } from 'reducers/cardsSlice'
+import { selectAllStats, updateStat } from 'reducers/statsSlice'
+import { updateNote } from 'reducers/notesSlice'
 
 const SectionHero = () => {
   const navigate = useNavigate()
-  const { sectionCardData, sectionNavbarData, setFreshCounter } = useSearch()
+  const dispatch = useAppDispatch()
+  const { setIsLoading, setTopError } = useSearch()
 
-  const data = useAppSelector(selectAllCards)
+  const [data, setData] = useState<Note[]>(initCardData)
+  const status = useAppSelector((state) => state.cards.status)
 
-  const onDismiss = async (currentNote: Note) => {
-    // 1, update Note table
-    const p1 = updateNote(currentNote.initId!, { mastered: true })
+  const allStats = useAppSelector(selectAllStats)
+  const allCards = useAppSelector(selectAllCards)
 
-    // 2, update Statistics table: mastered + 1
-    const stat = sectionNavbarData.find(
-      (ele) => ele.name === currentNote.industry
-    )
-    let p2: Promise<void> = Promise.resolve()
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchCards())
+    }
 
+    if (status === 'succeeded') {
+      setData(allCards)
+    }
+
+    if (status === 'failed') {
+      // setTopError()
+    }
+  }, [status, dispatch])
+
+  const onDismiss = async (currentCard: Note) => {
+    // 1, update notes table
+    const p1 = dispatch(updateNote({ id: currentCard.initId!, mastered: true }))
+
+    // 2, update stats table: mastered + 1, unmastered -1
+    const stat = allStats.find((ele) => ele.name === currentCard.industry)
+    let p2: Promise<any> = Promise.resolve()
     if (stat) {
       let newStat = {
         unmastered: stat.unmastered - 1 > 0 ? stat.unmastered - 1 : 0,
         mastered: stat.mastered + 1
       }
-      p2 = updateStats(stat.id!, newStat)
+      p2 = dispatch(updateStat({ ...stat, ...newStat }))
     }
 
-    // 3, update statistics table: replace a card
-    const currentCards = [...data].filter((ele) => ele.id !== currentNote.id)
-    const id = currentNote.id
-    const p3 = getFirstUnknownNote(currentCards)
-    Promise.all([p1, p2, p3]).then((result) => {
-      let p4 = updateStats(id!, { initId: '', keyword: '' })
-      if (result[2]) {
-        p4 = updateStats(id!, {
-          ...result[2],
-          initId: result[2]!.id
+    // 3, update cards table: replace a card
+    const unmasteredCard = allCards.find(
+      (ele) => ele.id !== currentCard.id && ele.mastered === false
+    )
+    let p3: Promise<any> = Promise.resolve()
+    if (unmasteredCard) {
+      p3 = dispatch(
+        updateCard({
+          ...unmasteredCard,
+          id: currentCard.id!,
+          initId: unmasteredCard.id
         })
-      }
-      p4.then(() => {
-        setFreshCounter((pre) => pre + 1)
-      }).catch((err) => {
-        console.log('dismiss error is', err)
-      })
-    })
+      )
+    } else {
+      p3 = dispatch(
+        updateCard({ id: currentCard.id!, initId: '', keyword: '' })
+      )
+    }
+
+    Promise.all([p1, p2, p3]).then()
   }
 
   return (
     <div className='ds-card-grid'>
-      {data.map((ele, index) => (
+      {data.map((ele) => (
         <div key={ele.id} className='ds-card'>
           <div className='img-wrapper'>
             <img loading='lazy' src={topicImg} alt='word image' />

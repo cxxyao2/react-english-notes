@@ -4,17 +4,25 @@ import { useSearch } from 'contexts/SearchContext'
 import { useEffect, useState } from 'react'
 import { initTopicData } from '../constants'
 import { Link } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { fetchTopics, selectAllTopics } from 'reducers/topicsSlice'
 
 const SectionTopics = () => {
   const [data, setData] = useState(initTopicData)
-  const { sectionTopicData: topics } = useSearch()
   const textColors = ['text-primary', 'text-success']
 
+  const dispatch = useAppDispatch()
+  const topics = useAppSelector(selectAllTopics)
+  const fetchStatus = useAppSelector((state) => state.topics.status)
+
   useEffect(() => {
-    if (topics && topics.length > 0) {
+    if (fetchStatus === 'idle') {
+      dispatch(fetchTopics())
+    }
+    if (fetchStatus === 'succeeded') {
       setData(topics)
     }
-  }, [topics])
+  }, [fetchStatus])
 
   return (
     <section id='topics'>

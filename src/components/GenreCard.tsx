@@ -1,15 +1,16 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { Note } from 'models/note'
 import { Link } from 'react-router-dom'
-import { deleteOneNote } from 'services/notes-service'
-import { useSearch } from 'contexts/SearchContext'
+import { useAppDispatch } from 'hooks'
+import { deleteNote } from 'reducers/notesSlice'
 
 type CardProps = {
   item: Note
 }
 
 export default function GenreCard({ item }: CardProps) {
-  const { results, setResults } = useSearch()
+  const dispatch = useAppDispatch()
+
   const categoryColor = item.category === 'word' ? 'text-info' : 'text-warning'
   return (
     <div className='card shadow position-relative overflow-hidden'>
@@ -23,11 +24,7 @@ export default function GenreCard({ item }: CardProps) {
           if (window.confirm('Are you sure to delete the record?') !== true) {
             return
           }
-          deleteOneNote(item.id || '').then()
-          const newNoteList = results?.filter(
-            (element) => element.id !== item.id
-          )
-          newNoteList && setResults(newNoteList)
+          dispatch(deleteNote(item.id!))
         }}
         className='position-absolute top-0 end-0  rounded-2 px-2 py-1  bg-dark text-warning'>
         <TrashIcon style={{ width: '24px', height: '24px' }} />

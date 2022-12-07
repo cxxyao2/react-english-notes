@@ -3,9 +3,13 @@ import {
   CurrencyDollarIcon,
   FaceSmileIcon
 } from '@heroicons/react/24/outline'
+
 import { Stats } from 'models/stats'
 import { useSearch } from 'contexts/SearchContext'
 import { useState, useEffect } from 'react'
+import { initNavbarData } from '../constants'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { fetchStats, selectAllStats } from 'reducers/statsSlice'
 
 // type IProps = React.PropsWithChildren<{
 //   stats: Stats[]
@@ -20,22 +24,22 @@ const icons = {
   sports: FaceSmileIcon
 }
 
-const initData: Stats[] = [
-  { name: 'IT', mastered: 1, unmastered: 1 },
-  { name: 'Finance', mastered: 1, unmastered: 2 },
-  { name: 'Culture', mastered: 1, unmastered: 3 }
-]
 
+// TODO: more not finish
 const SectionWords = () => {
-  const [data, setData] = useState(initData)
-  const { sectionNavbarData: stats } = useSearch()
+  const [data, setData] = useState(initNavbarData)
+  const dispatch = useAppDispatch()
+  const stats = useAppSelector(selectAllStats)
+  const fetchStatus = useAppSelector((state) => state.stats.status)
 
   useEffect(() => {
-    if (stats && stats.length > 0) {
-      setData(stats.slice(0, 3))
+    if (fetchStatus === 'idle') {
+      dispatch(fetchStats())
     }
-  }, [stats])
-
+    if (fetchStatus === 'succeeded') {
+      setData(stats)
+    }
+  }, [fetchStatus])
 
 
   const createCategory = (stat: Stats) => {

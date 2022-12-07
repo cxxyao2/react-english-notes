@@ -1,4 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import logger from 'redux-logger'
 import cardsReducer from './reducers/cardsSlice'
 import notesReducer from './reducers/notesSlice'
 import statsReducer from './reducers/statsSlice'
@@ -10,7 +11,8 @@ export const store = configureStore({
     notes: notesReducer,
     stats: statsReducer,
     topics: topicsReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
