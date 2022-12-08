@@ -2,42 +2,38 @@ import MDEditor from '@uiw/react-md-editor'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { getOneNote, updateNote } from 'services/notes-service'
 import { Note } from 'models/note'
-import {  useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import rehypeSanitize from 'rehype-sanitize'
 import { EyeIcon } from '@heroicons/react/24/outline'
+import { useAppSelector, useAppDispatch } from 'hooks'
+import { selectNoteById, updateNote } from './../reducers/notesSlice'
 
 export default function MarkdownDisplay() {
   const { id } = useParams()
-  const [note, setNote] = useState<Note | null>(null)
-  const [isEditable, setIsEditable] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const currentNote = useAppSelector((state) => selectNoteById(state, id!))
+
+  const [note, setNote] = useState<Note | null | undefined>(null)
+  const [isEditable, setIsEditable] = useState(false)
   const [content, setContent] = useState<string | undefined>('')
 
   useEffect(() => {
     if (id) {
-      getOneNote(id)
-        .then((data) => {
-          if (data) {
-            const currentData = data as Note
-            setNote(currentData)
-            setContent(currentData.content)
-            updateNote(id, {
-              hitCounter: currentData.hitCounter
-                ? currentData.hitCounter + 1
-                : 1
-            }).then()
-          }
-        })
-        .catch((err) => {
-          console.group('error is', err)
-        })
+      setNote(currentNote)
+      setContent(currentNote?.content)
+      if (currentNote) {
+        const hitCounter = currentNote?.hitCounter
+          ? currentNote?.hitCounter + 1
+          : 1
+        dispatch(updateNote({ id: currentNote.id, hitCounter }))
+      }
     }
   }, [id])
 
   const updateContent = () => {
-    note && updateNote(note.id!, { content: content ?? '' }).then()
+    note && dispatch(updateNote({ id: note.id, content }))
     navigate('/')
   }
 
@@ -70,7 +66,9 @@ export default function MarkdownDisplay() {
 
         <div className='mb-1'>
           <label className='form-label  fw-semibold'>Created:</label>
-          <div className='form-label'>{ new Date(note!.created).toLocaleString()}</div>
+          <div className='form-label'>
+            {note && new Date(note.created).toLocaleString()}
+          </div>
         </div>
         <br className='border-t-2  border-info' />
 

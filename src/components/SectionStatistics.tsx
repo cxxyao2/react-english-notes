@@ -1,28 +1,37 @@
 import { useEffect, useState } from 'react'
 
-import { initNavbarData } from '../constants'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { fetchStats, selectAllStats } from 'reducers/statsSlice'
+import { useSearch } from 'contexts/SearchContext'
 
 const SectionStatistics = () => {
-  const [data, setData] = useState(initNavbarData)
+  const { setIsLoading, setTopError } = useSearch()
+
   const dispatch = useAppDispatch()
   const stats = useAppSelector(selectAllStats)
   const fetchStatus = useAppSelector((state) => state.stats.status)
+  const fetchError = useAppSelector((state) => state.stats.error)
 
   const totalLearnt =
-    data && data.reduce((total, b) => total + (b.mastered ?? 0), 0)
+    stats && stats.reduce((total, b) => total + (b.mastered ?? 0), 0)
   const totalNeedLearn =
-    data && data.reduce((total, b) => total + (b.unmastered ?? 0), 0)
+    stats && stats.reduce((total, b) => total + (b.unmastered ?? 0), 0)
 
   useEffect(() => {
     if (fetchStatus === 'idle') {
+      setIsLoading(true)
+      setTopError('')
       dispatch(fetchStats())
     }
-    if (fetchStatus === 'succeeded') {
-      setData(stats)
+    if (fetchStatus === 'failed') {
+      setIsLoading(false)
+      setTopError(fetchError || 'Unknown error')
     }
-  }, [fetchStatus])
+    if (fetchStatus === 'succeeded') {
+      setIsLoading(false)
+      setTopError('')
+    }
+  }, [fetchStatus, dispatch])
 
   return (
     <section id='statistics'>

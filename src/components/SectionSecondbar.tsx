@@ -1,48 +1,46 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-import { initNavbarData } from '../constants'
 import { useAppSelector, useAppDispatch } from 'hooks'
 import { fetchStats, selectAllStats } from 'reducers/statsSlice'
 
 import { useSearch } from 'contexts/SearchContext'
 
 const SectionSecondbar = () => {
-  const navigate = useNavigate()
-  const { setSearchKey } = useSearch()
-  const [data, setData] = useState(initNavbarData)
+  const { setIsLoading, setTopError } = useSearch()
+
   const dispatch = useAppDispatch()
-  const stats = useAppSelector(selectAllStats)
+  const allStats = useAppSelector(selectAllStats)
   const fetchStatus = useAppSelector((state) => state.stats.status)
+  const fetchError = useAppSelector((state) => state.stats.error)
 
   useEffect(() => {
     if (fetchStatus === 'idle') {
+      setIsLoading(true)
+      setTopError('')
       dispatch(fetchStats())
     }
-    if (fetchStatus === 'succeeded') {
-      setData(stats)
+    if (fetchStatus === 'failed') {
+      setIsLoading(false)
+      setTopError(fetchError || 'Unknown error')
     }
-  }, [fetchStatus])
-
-
+    if (fetchStatus === 'succeeded') {
+      setIsLoading(false)
+      setTopError('')
+    }
+  }, [fetchStatus, dispatch])
 
   return (
     <div className='nav-scroller row bg-body  shadow-sm'>
       <nav className='nav' aria-label='Secondary navigation'>
-        {data &&
-          data.map((stat) => (
-            <button
-              key={stat.name}
-              className='nav-link active'
-              onClick={() => {
-                setSearchKey(stat.name)
-                navigate('/search')
-              }}>
+        {allStats &&
+          allStats.map((stat) => (
+            <Link key={stat.name} className='nav-link active' to='/search'>
               {stat.name}
               <span className='badge text-bg-info rounded-pill align-text-bottom'>
                 {stat.unmastered}
               </span>
-            </button>
+            </Link>
           ))}
       </nav>
     </div>

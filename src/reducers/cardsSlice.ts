@@ -5,8 +5,9 @@ import { db } from '../firebase'
 
 import type { RootState } from '../store'
 import { Note } from 'models/note'
-import { getNoteFromDocument } from 'services/notes-service'
-import { initCardData } from '../constants'
+
+import { INIT_CARD_DATA } from '../constants'
+import { getNoteFromDocument } from 'utils'
 
 
 // Define a type for the slice state
@@ -20,7 +21,7 @@ interface CardsState {
 const initialState: CardsState = {
   status: 'idle',
   error: null,
-  data: initCardData
+  data: INIT_CARD_DATA
 }
 
 export const updateCard = createAsyncThunk(

@@ -12,7 +12,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'))
 const LoginPage = lazy(() => import('./pages/Login'))
 const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
 const EditPage = lazy(() => import('./pages/MarkdownEditor'))
-const SearchPage = lazy(() => import('./pages/SearchResult'))
+const SearchPage = lazy(() => import('./pages/SearchPage'))
 
 function App() {
   return (

@@ -1,8 +1,17 @@
 import { Note } from 'models/note'
 import { Stats } from 'models/stats'
 
+export const INIT_INDUSTRIES = [
+  'Finance',
+  'IT',
+  'Weather',
+  'Culture',
+  'Sports',
+  'Health'
+]
+
 // 6 columns
-export const initNavbarData: Stats[] = [
+export const INIT_NAVBAR_DATA: Stats[] = [
   { name: 'Culture', mastered: 0, unmastered: 0 },
   { name: 'Weather', mastered: 0, unmastered: 0 },
   { name: 'Health', mastered: 0, unmastered: 0 },
@@ -12,7 +21,7 @@ export const initNavbarData: Stats[] = [
 ]
 
 // 3 cards
-export const initCardData: Note[] = [
+export const INIT_CARD_DATA: Note[] = [
   {
     language: 'en',
     category: 'word',
@@ -55,7 +64,7 @@ export const initCardData: Note[] = [
 ]
 
 // 2 topics
-export const initTopicData: Note[] = [
+export const INIT_TOP_DATA: Note[] = [
   {
     language: 'en',
     category: 'word',

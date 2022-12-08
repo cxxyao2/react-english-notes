@@ -12,8 +12,7 @@ import { db } from '../firebase'
 
 import type { RootState } from '../store'
 import { Note } from 'models/note'
-import { getNoteFromDocument } from 'services/notes-service'
-import { updateCard } from './cardsSlice'
+import { getNoteFromDocument } from 'utils'
 
 // Define a type for the slice state
 interface NotesState {
@@ -31,22 +30,21 @@ const initialState: NotesState = {
 
 export const addNote = createAsyncThunk(
   'notes/addNote',
-  async (note: Partial<Note>) => {
+  async (note: Partial<Note>, _) => {
     const keywordArray = note.keyword!.split(' ')
     const newDoc = await addDoc(collection(db, 'notes'), {
       ...note,
-      keyword: keywordArray
+      keyword: keywordArray,
+      created: new Date(note.created!)
     })
-
     return { ...note, id: newDoc.id } as Note
   }
 )
 
 export const deleteNote = createAsyncThunk(
   'notes/deleteNote',
-  async (id: string, { dispatch }) => {
+  async (id: string, _) => {
     await deleteDoc(doc(db, 'notes', id))
-    // TODO  dispatch(updateCard({id:'ab'}))
     return id
   }
 )
@@ -116,6 +114,10 @@ export const NotesSlice = createSlice({
       state.error = action.error.message
     })
 
+    builder.addCase(addNote.pending, (state: NotesState) => {
+      state.status = 'loading'
+    })
+
     builder.addCase(addNote.fulfilled, (state: NotesState, action) => {
       state.status = 'succeeded'
       state.data.push(action.payload)
@@ -145,6 +147,8 @@ export const NotesSlice = createSlice({
 export const selectAllNotes = (state: RootState) => state.notes.data
 export const selectNoteById = (state: RootState, NoteId: string) =>
   state.notes.data.find((ele) => ele.id === NoteId)
+  export const selectNotesByIndustry = (state: RootState, industry: string) =>
+  state.notes.data.find((ele) => ele.industry.toLowerCase() === industry)
 
 // Other code such as selectors can use the imported `RootState` type
 

@@ -5,8 +5,9 @@ import { db } from '../firebase'
 
 import type { RootState } from '../store'
 import { Note } from 'models/note'
-import { getNoteFromDocument } from 'services/notes-service'
-import { initTopicData } from '../constants'
+
+import { INIT_TOP_DATA } from '../constants'
+import { getNoteFromDocument } from 'utils'
 
 // Define a type for the slice state
 interface TopicsState {
@@ -19,7 +20,7 @@ interface TopicsState {
 const initialState: TopicsState = {
   status: 'idle',
   error: null,
-  data: initTopicData
+  data: INIT_TOP_DATA
 }
 
 export const updateTopic = createAsyncThunk(

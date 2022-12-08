@@ -5,18 +5,27 @@ import rehypeSanitize from 'rehype-sanitize'
 import * as Yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { addNote } from 'services/notes-service'
+
 import { Note } from 'models/note'
 import { useNavigate } from 'react-router-dom'
-import { getMessageOfError } from 'utils'
-import { useSearch } from 'contexts/SearchContext'
-import { updateStats } from 'services/stats-service'
+
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { addNote } from 'reducers/notesSlice'
+import { selectAllTopics } from 'reducers/topicsSlice'
+import { selectAllCards, updateCard } from 'reducers/cardsSlice'
+import { updateTopic } from './../reducers/topicsSlice'
+import { selectAllStats, updateStat } from 'reducers/statsSlice'
 
 const MarkdownEditor = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const allTopics = useAppSelector(selectAllTopics)
+  const allCards = useAppSelector(selectAllCards)
+  const allStats = useAppSelector(selectAllStats)
+
   const btnSubmitRef = useRef(null)
   const inputDateRef = useRef<HTMLInputElement>(null)
   const inputTimeRef = useRef<HTMLInputElement>(null)
-  const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     language: Yup.string().required('language is required'),
     keyword: Yup.string().required('Keyword is required'),
@@ -29,12 +38,6 @@ const MarkdownEditor = () => {
   const { errors } = formState
   const [content, setContent] = useState<string | undefined>('Hello world')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const {
-    sectionCardData,
-    sectionTopicData,
-    sectionNavbarData,
-    setFreshCounter
-  } = useSearch()
 
   // add accessibility to  Markdown Editor
   useEffect(() => {
@@ -43,15 +46,9 @@ const MarkdownEditor = () => {
     const year = today.getFullYear().toString()
     const month = (today.getMonth() + 1).toString().padStart(2, '0')
     const day = today.getDate().toString().padStart(2, '0')
-    const minutes = today.getMinutes().toString().padStart(2, '0')
-    const seconds = today.getSeconds().toString().padStart(2, '0')
 
     if (inputDateRef && inputDateRef.current) {
       inputDateRef.current.value = year + '-' + month + '-' + day
-    }
-
-    if (inputTimeRef && inputTimeRef.current) {
-      inputTimeRef.current.value = `${minutes}:${seconds}`
     }
 
     const keyupEvent = (event: KeyboardEvent) => {
@@ -67,41 +64,38 @@ const MarkdownEditor = () => {
     }
   }, [])
 
-  const updateSectionTopic = (id: string, newNote: Note) => {
-    const sorted = [...sectionTopicData]
+  const updateSectionTopic = (newNote: Note) => {
+    const sorted = [...allTopics]
     sorted.sort((a, b) => (a.created > b.created ? -1 : 1))
 
     if (sorted && sorted[0].id) {
-      const newTopic = { ...newNote, initId: id }
-      updateStats(sorted[0].id, newTopic).then(() => {
-        setFreshCounter((pre) => pre + 1)
-        navigate('/')
-      })
+      const newTopic = { ...newNote, initId: newNote.id, id: sorted[0].id }
+      dispatch(updateTopic(newTopic))
     }
+    navigate('/')
   }
 
-  const updateSectionWord = (id: string, newNote: Note) => {
-    const stat = sectionNavbarData.find((ele) => ele.name === newNote.industry)
+  const updateSectionCard = (newNote: Note) => {
+    // 1, update stats table: unmastered + 1
+    const stat = allStats.find((ele) => ele.name === newNote.industry)
     if (stat) {
-      let newStat = {
-        unmastered: stat.unmastered > 0 ? stat.unmastered + 1 : 1
-      }
-
-      const nullCard = sectionCardData.find((ele) => !ele.initId)
-      const p1 = updateStats(stat.id!, newStat)
-      let p2: Promise<void> = Promise.resolve()
-      if (nullCard) {
-        p2 = updateStats(nullCard.id!, {
-          ...newNote,
-          initId: id
-        })
-      }
-
-      Promise.all([p1, p2]).then(() => {
-        setFreshCounter((pre) => pre + 1)
-        navigate('/')
-      })
+      let unmastered = stat.unmastered + 1
+      const needUpdateField = { unmastered }
+      dispatch(updateStat({ ...stat, ...needUpdateField }))
     }
+
+    // 2, update cards table: replace a blank card
+    const blankCard = allCards.find((ele) => !ele.initId)
+    if (blankCard) {
+      dispatch(
+        updateCard({
+          ...newNote,
+          id: blankCard.id,
+          initId: newNote.id
+        })
+      )
+    }
+    navigate('/')
   }
 
   const onSubmit = (data: any) => {
@@ -129,20 +123,18 @@ const MarkdownEditor = () => {
       hitCounter: 1
     }
 
-    addNote(note1)
-      .then((result) => {
-        const newId = result.id
-        if (note1.category === 'topic') {
-          updateSectionTopic(newId, note1)
-        }
-        if (note1.category === 'word') {
-          updateSectionWord(newId, note1)
-        }
-      })
-      .catch((error) => {
-        let message = getMessageOfError(error)
-        setErrorMessage(message)
-      })
+    dispatch(addNote(note1)).then((result) => {
+      const returnedNote = result.payload as Note
+      note1.id = returnedNote.id
+      console.log('add new note', result)
+
+      if (note1.category === 'topic') {
+        updateSectionTopic(note1)
+      }
+      if (note1.category === 'word') {
+        updateSectionCard(note1)
+      }
+    })
   }
 
   return (

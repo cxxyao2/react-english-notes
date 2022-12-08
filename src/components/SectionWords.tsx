@@ -7,7 +7,7 @@ import {
 import { Stats } from 'models/stats'
 import { useSearch } from 'contexts/SearchContext'
 import { useState, useEffect } from 'react'
-import { initNavbarData } from '../constants'
+import { INIT_NAVBAR_DATA } from '../constants'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { fetchStats, selectAllStats } from 'reducers/statsSlice'
 
@@ -24,24 +24,33 @@ const icons = {
   sports: FaceSmileIcon
 }
 
-
-// TODO: more not finish
+// TODO  是否需要单独init在这里,还是使用store 的值来初始化
 const SectionWords = () => {
-  const [data, setData] = useState(initNavbarData)
+  const { setIsLoading, setTopError } = useSearch()
+
+  const [data, setData] = useState(INIT_NAVBAR_DATA)
   const dispatch = useAppDispatch()
   const stats = useAppSelector(selectAllStats)
   const fetchStatus = useAppSelector((state) => state.stats.status)
+  const fetchError = useAppSelector((state) => state.stats.error)
 
   useEffect(() => {
     if (fetchStatus === 'idle') {
+      setIsLoading(true)
+      setTopError('')
       dispatch(fetchStats())
     }
+    if (fetchStatus === 'failed') {
+      setIsLoading(false)
+      setTopError(fetchError || 'Unknown error')
+    }
     if (fetchStatus === 'succeeded') {
+      setIsLoading(false)
+      setTopError('')
       setData(stats)
     }
-  }, [fetchStatus])
-
-
+  }, [fetchStatus, dispatch])
+  
   const createCategory = (stat: Stats) => {
     type ObjectKey = keyof typeof icons
     const IconName = icons[stat.name.toLowerCase() as ObjectKey]
@@ -63,9 +72,7 @@ const SectionWords = () => {
                   Get Started!
                 </button>
               </div>
-              <span className='d-block'>
-                new: {stat.unmastered}
-              </span>
+              <span className='d-block'>new: {stat.unmastered}</span>
             </div>
           </div>
         </div>

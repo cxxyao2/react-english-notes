@@ -11,7 +11,7 @@ import { db } from '../firebase'
 
 import type { RootState } from '../store'
 import { Stats } from 'models/stats'
-import { initNavbarData } from '../constants'
+import { INIT_NAVBAR_DATA } from '../constants'
 
 
 // Define a type for the slice state
@@ -25,7 +25,7 @@ interface StatsState {
 const initialState: StatsState = {
   status: 'idle',
   error: null,
-  data: initNavbarData
+  data: INIT_NAVBAR_DATA
 }
 
 export const updateStat = createAsyncThunk(

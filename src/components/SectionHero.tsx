@@ -1,6 +1,6 @@
 import topicImg from './SectionTopicIT.jpg'
 import './SectionHero.css'
-import { initCardData } from '../constants'
+import { INIT_CARD_DATA } from '../constants'
 import { useEffect, useState } from 'react'
 import { useSearch } from 'contexts/SearchContext'
 import { useNavigate } from 'react-router-dom'
@@ -9,32 +9,44 @@ import { Note } from 'models/note'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { selectAllCards, fetchCards, updateCard } from 'reducers/cardsSlice'
 import { selectAllStats, updateStat } from 'reducers/statsSlice'
-import { updateNote } from 'reducers/notesSlice'
+import { selectAllNotes, updateNote, fetchNotes } from 'reducers/notesSlice'
 
+// TODO  是否需要单独init在这里,还是使用store 的值来初始化
 const SectionHero = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { setIsLoading, setTopError } = useSearch()
 
-  const [data, setData] = useState<Note[]>(initCardData)
-  const status = useAppSelector((state) => state.cards.status)
+  const cardsStatus = useAppSelector((state) => state.cards.status)
+  const fetchError = useAppSelector((state) => state.cards.error)
+  const notesStatus = useAppSelector((state) => state.notes.status)
 
   const allStats = useAppSelector(selectAllStats)
   const allCards = useAppSelector(selectAllCards)
+  const allNotes = useAppSelector(selectAllNotes)
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (notesStatus === 'idle') {
+      dispatch(fetchNotes())
+    }
+  }, [dispatch, fetchNotes, notesStatus])
+
+  useEffect(() => {
+    if (cardsStatus === 'idle') {
+      setIsLoading(true)
+      setTopError('')
       dispatch(fetchCards())
     }
 
-    if (status === 'succeeded') {
-      setData(allCards)
+    if (cardsStatus === 'failed') {
+      setIsLoading(false)
+      setTopError(fetchError || 'Unknown error')
     }
-
-    if (status === 'failed') {
-      // setTopError()
+    if (cardsStatus === 'succeeded') {
+      setIsLoading(false)
+      setTopError('')
     }
-  }, [status, dispatch])
+  }, [cardsStatus, fetchCards, dispatch, fetchError, setIsLoading, setTopError])
 
   const onDismiss = async (currentCard: Note) => {
     // 1, update notes table
@@ -45,15 +57,20 @@ const SectionHero = () => {
     let p2: Promise<any> = Promise.resolve()
     if (stat) {
       let newStat = {
-        unmastered: stat.unmastered - 1 > 0 ? stat.unmastered - 1 : 0,
-        mastered: stat.mastered + 1
+        unmastered: stat.unmastered ? stat.unmastered - 1 : 0,
+        mastered: stat.mastered ?? 0 + 1
       }
       p2 = dispatch(updateStat({ ...stat, ...newStat }))
     }
 
-    // 3, update cards table: replace a card
-    const unmasteredCard = allCards.find(
-      (ele) => ele.id !== currentCard.id && ele.mastered === false
+    // 3, update cards table: replace a card, no duplicate
+    const existIds: string[] = []
+    allCards.forEach((ele) => existIds.push(ele.initId!))
+    const unmasteredCard = allNotes.find(
+      (ele) =>
+        ele.id !== currentCard.id &&
+        ele.mastered === false &&
+        !existIds.includes(ele.id!)
     )
     let p3: Promise<any> = Promise.resolve()
     if (unmasteredCard) {
@@ -66,7 +83,12 @@ const SectionHero = () => {
       )
     } else {
       p3 = dispatch(
-        updateCard({ id: currentCard.id!, initId: '', keyword: '' })
+        updateCard({
+          id: currentCard.id!,
+          initId: '',
+          keyword: 'No more word to learn',
+          content: ''
+        })
       )
     }
 
@@ -75,10 +97,10 @@ const SectionHero = () => {
 
   return (
     <div className='ds-card-grid'>
-      {data.map((ele) => (
-        <div key={ele.id} className='ds-card'>
+      {allCards.map((ele, index) => (
+        <div key={index} className='ds-card'>
           <div className='img-wrapper'>
-            <img loading='lazy' src={topicImg} alt='word image' />
+            <img loading='lazy' src={topicImg} alt='word' />
           </div>
           <div className='mt-1 mb-2 p-1'>
             <div className='' style={{ fontSize: '12px' }}>
@@ -87,11 +109,7 @@ const SectionHero = () => {
                 : new Date().toDateString()}{' '}
             </div>
             <div style={{ maxWidth: '200px' }} className='text-truncate'>
-              {ele.initId
-                ? Array.isArray(ele.keyword)
-                  ? ele.keyword.join(' ')
-                  : ele.keyword
-                : 'No more word to review'}
+              {ele.keyword}
             </div>
           </div>
           <div className='d-flex p-1 justify-content-between my-2'>
