@@ -9,10 +9,6 @@ const SectionTopics = () => {
   const textColors = ['text-primary', 'text-success']
   const data = useAppSelector(selectAllTopics)
 
-  useEffect(() => {
-    console.log('Topic is reredux')
-  }, [])
-
   return (
     <section id='topics'>
       <div className='container bg-white'>

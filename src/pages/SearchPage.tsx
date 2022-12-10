@@ -3,49 +3,28 @@ import SearchResult from 'components/SearchResult'
 import { INIT_CARD_DATA } from '../constants'
 import { useEffect, useState } from 'react'
 import { Note } from 'models/note'
-import { useAppSelector, useAppDispatch } from 'hooks'
-import { selectAllNotes, fetchNotes } from 'reducers/notesSlice'
-import { useSearch } from 'contexts/SearchContext'
+import { useAppSelector } from 'hooks'
+import { selectAllNotes } from 'reducers/notesSlice'
 
 export default function SearchPage() {
-  const { setIsLoading, setTopError } = useSearch()
   const [currentFilters, setCurrentFilters] = useState<
     FormData | null | undefined
   >(null)
   const [results, setResults] = useState<Note[]>(INIT_CARD_DATA)
   const allNotes = useAppSelector(selectAllNotes)
-  const dispatch = useAppDispatch()
-  const fetchError = useAppSelector((state) => state.notes.error)
-  const fetchStatus = useAppSelector((state) => state.notes.status)
 
   useEffect(() => {
-    if (fetchStatus === 'idle') {
-      setIsLoading(true)
-      dispatch(fetchNotes())
-    }
-  })
-
-  useEffect(() => {
-    if (fetchError) {
-      setTopError(fetchError)
-    }
-  }, [fetchError, setTopError])
-
-  useEffect(() => {
-    if (fetchStatus === 'failed' || fetchStatus === 'succeeded') {
-      setIsLoading(false)
-    }
-  }, [fetchStatus,setIsLoading])
-
-  useEffect(() => {
-    handleSearch()
+    handleSearch(currentFilters, allNotes)
   }, [currentFilters, allNotes])
 
-  const handleSearch = () => {
-    if (!currentFilters) {
+  const handleSearch = (
+    newFilters: FormData | null | undefined,
+    notes: Note[]
+  ) => {
+    if (!newFilters) {
       return
     }
-    const e: FormData = currentFilters
+    const e: FormData = newFilters
     const keyword = e.get('keyword')?.toString() || ''
     const industry = e.get('industry')?.toString() || ''
     const showMastered = e.get('checkMastered')?.toString() || ''
@@ -56,7 +35,7 @@ export default function SearchPage() {
       masteredStatus = showMastered === 'true'
     }
 
-    let waitingFilter = [...allNotes]
+    let waitingFilter = [...notes]
 
     const filteredData = waitingFilter.filter((ele) => {
       let isTrue = false
