@@ -1,7 +1,7 @@
 import { useSearch } from 'contexts/SearchContext'
 
 const Toast = () => {
-  const { topError } = useSearch()
+  const { topError, setTopError } = useSearch()
   if (!topError) return null
 
   return (
@@ -18,8 +18,8 @@ const Toast = () => {
           <button
             type='button'
             className='btn-close me-2 m-auto'
-            data-bs-dismiss='toast'
-            aria-label='Close'></button>
+            aria-label='Close'
+            onClick={() => setTopError('')}></button>
         </div>
       </div>
     </div>
