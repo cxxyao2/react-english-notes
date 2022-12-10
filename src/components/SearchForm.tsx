@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { INIT_INDUSTRIES } from '../constants'
+import debounce from 'lodash.debounce'
 
 type Props = {
   triggerSearch: (arg: FormData) => void
@@ -20,15 +21,41 @@ export default function SearchForm({ triggerSearch }: Props) {
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  // TODO: lodash debounce test. when input stop then submit
+  const renderRadiobuttonGroup = () => (
+    <>
+      <div className='mb-3'>
+        <div className='d-flex flex-row justify-content-evenly align-items-center p-2 gap-2 flex-wrap'>
+          {industryList.map((item, index) => (
+            <div key={index} className='form-check form-check-inline'>
+              <input
+                className='form-check-input'
+                type='radio'
+                name='industry'
+                id={`industry${index}`}
+                value={item}
+                onChange={changeHandler}
+              />
+              <label
+                className={`form-check-label ${industryclassName[index]} `}
+                htmlFor={`industry${index}`}>
+                {item}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
 
-  const handleChange = () => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation()
     if (!formRef.current) {
       return
     }
     const formData = new FormData(formRef.current)
     triggerSearch(formData)
   }
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 300), [])
 
   return (
     <form noValidate ref={formRef} role='search'>
@@ -47,10 +74,7 @@ export default function SearchForm({ triggerSearch }: Props) {
             aria-label='Search Criteria'
             name='keyword'
             id='keyword'
-            onChange={(e) => {
-              e.preventDefault()
-              handleChange()
-            }}
+            onChange={debouncedChangeHandler}
           />
         </div>
       </div>
@@ -64,10 +88,7 @@ export default function SearchForm({ triggerSearch }: Props) {
               name={`check${checkName}`}
               id={`check${checkName}`}
               value='true'
-              onChange={(e) => {
-                e.stopPropagation()
-                handleChange()
-              }}
+              onChange={debouncedChangeHandler}
             />
             <label className='form-check-label' htmlFor={`check${checkName}`}>
               {checkName}
@@ -76,45 +97,7 @@ export default function SearchForm({ triggerSearch }: Props) {
         ))}
       </div>
 
-      <div className='mb-3'>
-        <div className='d-flex flex-row justify-content-evenly align-items-center p-2 gap-2 flex-wrap'>
-          {industryList.map((item, index) => (
-            <div key={index} className='form-check form-check-inline'>
-              {index === 0 ? (
-                <input
-                  className='form-check-input'
-                  type='radio'
-                  name='industry'
-                  id={`industry${index}`}
-                  value={item}
-                  checked
-                  onChange={(e) => {
-                    e.stopPropagation()
-                    handleChange()
-                  }}
-                />
-              ) : (
-                <input
-                  className='form-check-input'
-                  type='radio'
-                  name='industry'
-                  id={`industry${index}`}
-                  value={item}
-                  onChange={(e) => {
-                    e.stopPropagation()
-                    handleChange()
-                  }}
-                />
-              )}
-              <label
-                className={`form-check-label ${industryclassName[index]} `}
-                htmlFor={`industry${index}`}>
-                {item}
-              </label>
-            </div>
-          ))}
-        </div>
-      </div>
+      {renderRadiobuttonGroup()}
     </form>
   )
 }

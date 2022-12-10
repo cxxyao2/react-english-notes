@@ -13,6 +13,7 @@ const LoginPage = lazy(() => import('./pages/Login'))
 const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
 const EditPage = lazy(() => import('./pages/MarkdownEditor'))
 const SearchPage = lazy(() => import('./pages/SearchPage'))
+const SearchBook = lazy(() => import('./pages/SearchBook'))
 
 function App() {
   return (
@@ -53,6 +54,15 @@ function App() {
                 element={
                   <React.Suspense fallback={<div>Loading...</div>}>
                     <SearchPage />
+                  </React.Suspense>
+                }
+              />
+
+              <Route
+                path='/books'
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <SearchBook />
                   </React.Suspense>
                 }
               />

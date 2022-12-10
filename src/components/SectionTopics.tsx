@@ -1,40 +1,12 @@
-import { Stats } from 'models/stats'
 import topicImg from './images/jt_ikpglw_c_scale_w_612.jpg'
-import { useSearch } from 'contexts/SearchContext'
-import { useEffect, useState } from 'react'
-import { INIT_TOP_DATA } from '../constants'
+
 import { Link } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from 'hooks'
-import { fetchTopics, selectAllTopics } from 'reducers/topicsSlice'
+import { useAppSelector } from 'hooks'
+import { selectAllTopics } from 'reducers/topicsSlice'
 
-// TODO  是否需要单独init在这里,还是使用store 的值来初始化
 const SectionTopics = () => {
-  const { setIsLoading, setTopError } = useSearch()
-
-  const [data, setData] = useState(INIT_TOP_DATA)
   const textColors = ['text-primary', 'text-success']
-
-  const dispatch = useAppDispatch()
-  const topics = useAppSelector(selectAllTopics)
-  const fetchStatus = useAppSelector((state) => state.topics.status)
-  const fetchError = useAppSelector((state) => state.topics.error)
-
-  useEffect(() => {
-    if (fetchStatus === 'idle') {
-      setIsLoading(true)
-      setTopError('')
-      dispatch(fetchTopics())
-    }
-    if (fetchStatus === 'failed') {
-      setIsLoading(false)
-      setTopError(fetchError || 'Unknown error')
-    }
-    if (fetchStatus === 'succeeded') {
-      setIsLoading(false)
-      setTopError('')
-      setData(topics)
-    }
-  }, [fetchStatus, dispatch])
+  const data = useAppSelector(selectAllTopics)
 
   return (
     <section id='topics'>

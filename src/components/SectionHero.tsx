@@ -1,52 +1,19 @@
 import topicImg from './SectionTopicIT.jpg'
 import './SectionHero.css'
-import { INIT_CARD_DATA } from '../constants'
-import { useEffect, useState } from 'react'
-import { useSearch } from 'contexts/SearchContext'
 import { useNavigate } from 'react-router-dom'
 import { Note } from 'models/note'
-
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { selectAllCards, fetchCards, updateCard } from 'reducers/cardsSlice'
+import { selectAllNotes, updateNote } from 'reducers/notesSlice'
 import { selectAllStats, updateStat } from 'reducers/statsSlice'
-import { selectAllNotes, updateNote, fetchNotes } from 'reducers/notesSlice'
+import { selectAllCards, updateCard } from 'reducers/cardsSlice'
 
-// TODO  是否需要单独init在这里,还是使用store 的值来初始化
 const SectionHero = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { setIsLoading, setTopError } = useSearch()
-
-  const cardsStatus = useAppSelector((state) => state.cards.status)
-  const fetchError = useAppSelector((state) => state.cards.error)
-  const notesStatus = useAppSelector((state) => state.notes.status)
 
   const allStats = useAppSelector(selectAllStats)
   const allCards = useAppSelector(selectAllCards)
   const allNotes = useAppSelector(selectAllNotes)
-
-  useEffect(() => {
-    if (notesStatus === 'idle') {
-      dispatch(fetchNotes())
-    }
-  }, [dispatch, fetchNotes, notesStatus])
-
-  useEffect(() => {
-    if (cardsStatus === 'idle') {
-      setIsLoading(true)
-      setTopError('')
-      dispatch(fetchCards())
-    }
-
-    if (cardsStatus === 'failed') {
-      setIsLoading(false)
-      setTopError(fetchError || 'Unknown error')
-    }
-    if (cardsStatus === 'succeeded') {
-      setIsLoading(false)
-      setTopError('')
-    }
-  }, [cardsStatus, fetchCards, dispatch, fetchError, setIsLoading, setTopError])
 
   const onDismiss = async (currentCard: Note) => {
     // 1, update notes table

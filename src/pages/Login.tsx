@@ -48,7 +48,7 @@ export default function Login() {
               id='email'
               type='email'
               {...register('email')}
-              className='form-control'
+              className='form-control border border-primary'
               name='email'
             />
             <label htmlFor='email'>Email Address</label>
@@ -63,7 +63,7 @@ export default function Login() {
               id='password'
               type='password'
               {...register('password')}
-              className='form-control'
+              className='form-control border border-primary'
               name='password'
             />
             <label htmlFor='password'>Password</label>

@@ -81,6 +81,18 @@ const Asidebar = () => {
               closeRef?.current?.click()
             }}>
             <MyNavLink
+              to='/books'
+              className='nav-link'
+              activeClassName='nav-link active'>
+              Infinite Scroll
+            </MyNavLink>
+          </li>
+          <li
+            className='nav-item'
+            onClick={() => {
+              closeRef?.current?.click()
+            }}>
+            <MyNavLink
               to='/about'
               className='nav-link'
               activeClassName='nav-link active'>

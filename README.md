@@ -12,7 +12,7 @@
 - Redux.Redux Toolkit. Typed dispatch and typed selector
 - Redux: Ayncthunk function.Extra reducers. Save timestamp of Date object for serialization.
 - Typescript
-- Bootstrap 5
+- Bootstrap 5, responsive UI
 - Markdown Editor : @uiw/react-md-editor . Edit / Update
 - React-router-dom v6
 - Protected routes: redirect to login form if not logged in
@@ -25,6 +25,10 @@
 - tsconfig.json: absolute imports
 - Modify webpack.config.js without eject using @craco/craco
 - analyzer and compress bundled files after building
+
+## performance
+
+- lodash.debounce input onchange event
 
 ## Vscode extensions
 

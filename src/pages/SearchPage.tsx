@@ -35,7 +35,7 @@ export default function SearchPage() {
     if (fetchStatus === 'failed' || fetchStatus === 'succeeded') {
       setIsLoading(false)
     }
-  }, [fetchStatus])
+  }, [fetchStatus,setIsLoading])
 
   useEffect(() => {
     handleSearch()
@@ -55,14 +55,24 @@ export default function SearchPage() {
     if (!showBoth) {
       masteredStatus = showMastered === 'true'
     }
-    const filteredData = allNotes.filter((ele) =>
-      showBoth
-        ? ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
+
+    let waitingFilter = [...allNotes]
+
+    const filteredData = waitingFilter.filter((ele) => {
+      let isTrue = false
+      if (showBoth) {
+        isTrue =
+          ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
           ele.industry.toLowerCase() === industry.toLowerCase()
-        : ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
+      } else {
+        isTrue =
+          ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
           ele.industry.toLowerCase() === industry.toLowerCase() &&
           ele.mastered === masteredStatus
-    )
+      }
+      return isTrue
+    })
+
     setResults(filteredData)
   }
 
