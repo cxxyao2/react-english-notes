@@ -92,17 +92,24 @@ export const TopicsSlice = createSlice({
   }
 })
 
-// export const selectAllTopics = (state: RootState) => {
-//   console.log('hi,selectAllTopics selector is called')
-//   return state.topics.data
-// }
+
 
 export const topicsSelector = createSelector(
   (state: RootState) => state.topics.data,
-  (topics) => {
-    console.log('hi,selectAllTopics selector is called')
-    return topics}
+  (topics) => topics
 )
+
+
+export const topicsStatusSelector = createSelector(
+  (state: RootState) => state.topics.status,
+  (status) => status
+)
+
+
+
+export const simpleStatusSelector = (state: RootState) => {
+  return state.topics.status
+}
 
 export const selectTopicById = (state: RootState, TopicId: string) =>
   state.topics.data.find((ele) => ele.id === TopicId)

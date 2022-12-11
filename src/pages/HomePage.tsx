@@ -8,24 +8,32 @@ import { useAppDispatch, useAppSelector } from 'hooks'
 import { fetchCards } from 'reducers/cardsSlice'
 
 import { fetchNotes } from 'reducers/notesSlice'
-import { useNavigate } from 'react-router-dom'
 import { useSearch } from 'contexts/SearchContext'
-import { fetchTopics } from 'reducers/topicsSlice'
+import {
+  fetchTopics,
+  simpleStatusSelector,
+  topicsStatusSelector
+} from 'reducers/topicsSlice'
 import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
 
 export default function HomePage() {
   // get all data here
-  const navigate = useNavigate()
+
   const dispatch = useAppDispatch()
   const { setIsLoading, setTopError } = useSearch()
 
   const cardsError = useAppSelector((state) => state.cards.error)
   const statsError = useAppSelector((state) => state.stats.error)
   const topicsError = useAppSelector((state) => state.topics.error)
+  const topicsStatus = useAppSelector(topicsStatusSelector)
 
   useEffect(() => {
+    if (topicsStatus !== 'idle') {
+      return
+    }
     setIsLoading(true)
+
     Promise.all([
       dispatch(fetchCards()),
       dispatch(fetchStats()),

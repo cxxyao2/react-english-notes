@@ -7,9 +7,8 @@ import { useParams } from 'react-router-dom'
 import rehypeSanitize from 'rehype-sanitize'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import { useAppSelector, useAppDispatch } from 'hooks'
-import notesSlice, {
+import {
   noteIdSelector,
-  selectNoteById,
   updateNote
 } from './../reducers/notesSlice'
 

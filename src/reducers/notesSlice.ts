@@ -13,7 +13,6 @@ import { db } from '../firebase'
 import type { RootState } from '../store'
 import { Note } from 'models/note'
 import { getNoteFromDocument } from 'utils'
-import { Action } from '@remix-run/router'
 
 // Define a type for the slice state
 interface NotesState {
@@ -151,8 +150,7 @@ export const NotesSlice = createSlice({
   }
 })
 
-
-export const {setSelectedId} = NotesSlice.actions
+export const { setSelectedId } = NotesSlice.actions
 export const selectAllNotes = (state: RootState) => state.notes.data
 
 export const noteIdSelector = createSelector(
@@ -160,8 +158,5 @@ export const noteIdSelector = createSelector(
   (state: RootState) => state.notes.selectedId,
   (notes, id) => notes.find((note) => note.id === id)
 )
-
-export const selectNoteById = (state: RootState, NoteId: string) =>
-  state.notes.data.find((ele) => ele.id === NoteId)
 
 export default NotesSlice.reducer
