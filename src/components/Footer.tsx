@@ -17,9 +17,9 @@ const Footer = () => {
               height={24}
               fill='var(--color-blue-middle)'></GlobeAltIcon>
           </a>
-          <span className='mb-3 mb-md-0 text-muted'>
+          <p className='mb-3 mb-md-0 text-bg-primary px-2 rounded-2'>
             &copy; 2022 Jennifer,&nbsp;Canada
-          </span>
+          </p>
         </div>
 
         <ul className='nav col-md-4 justify-content-end list-unstyled d-flex'>

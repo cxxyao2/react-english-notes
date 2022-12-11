@@ -67,7 +67,7 @@ const SectionHero = () => {
       {allCards.map((ele, index) => (
         <div key={index} className='ds-card'>
           <div className='img-wrapper'>
-            <img loading='lazy' src={topicImg} alt='word' />
+            <img src={topicImg} alt='word' />
           </div>
           <div className='mt-1 mb-2 p-1'>
             <div className='' style={{ fontSize: '12px' }}>
