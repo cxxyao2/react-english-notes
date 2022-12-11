@@ -7,13 +7,17 @@ import { useParams } from 'react-router-dom'
 import rehypeSanitize from 'rehype-sanitize'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import { useAppSelector, useAppDispatch } from 'hooks'
-import { selectNoteById, updateNote } from './../reducers/notesSlice'
+import notesSlice, {
+  noteIdSelector,
+  selectNoteById,
+  updateNote
+} from './../reducers/notesSlice'
 
 export default function MarkdownDisplay() {
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const currentNote = useAppSelector((state) => selectNoteById(state, id!))
+  const currentNote = useAppSelector(noteIdSelector)
 
   const [note, setNote] = useState<Note | null | undefined>(null)
   const [isEditable, setIsEditable] = useState(false)

@@ -2,12 +2,11 @@ import topicImg from './images/jt_ikpglw_c_scale_w_612.jpg'
 
 import { Link } from 'react-router-dom'
 import { useAppSelector } from 'hooks'
-import { selectAllTopics } from 'reducers/topicsSlice'
-import { useEffect } from 'react'
+import { topicsSelector } from 'reducers/topicsSlice'
 
 const SectionTopics = () => {
   const textColors = ['text-primary', 'text-success']
-  const data = useAppSelector(selectAllTopics)
+  const data = useAppSelector(topicsSelector)
 
   return (
     <section id='topics'>

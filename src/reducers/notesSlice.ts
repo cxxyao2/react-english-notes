@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {
   collection,
@@ -13,19 +13,22 @@ import { db } from '../firebase'
 import type { RootState } from '../store'
 import { Note } from 'models/note'
 import { getNoteFromDocument } from 'utils'
+import { Action } from '@remix-run/router'
 
 // Define a type for the slice state
 interface NotesState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null | undefined
   data: Note[]
+  selectedId: string
 }
 
 // Define the initial state using that type
 const initialState: NotesState = {
   status: 'idle',
   error: null,
-  data: []
+  data: [],
+  selectedId: ''
 }
 
 export const addNote = createAsyncThunk(
@@ -76,7 +79,11 @@ export const NotesSlice = createSlice({
   name: 'Notes',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedId: (state: NotesState, action: PayloadAction<string>) => {
+      state.selectedId = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchNotes.pending, (state: NotesState) => {
       state.status = 'loading'
@@ -144,12 +151,17 @@ export const NotesSlice = createSlice({
   }
 })
 
+
+export const {setSelectedId} = NotesSlice.actions
 export const selectAllNotes = (state: RootState) => state.notes.data
+
+export const noteIdSelector = createSelector(
+  (state: RootState) => state.notes.data,
+  (state: RootState) => state.notes.selectedId,
+  (notes, id) => notes.find((note) => note.id === id)
+)
+
 export const selectNoteById = (state: RootState, NoteId: string) =>
   state.notes.data.find((ele) => ele.id === NoteId)
-  export const selectNotesByIndustry = (state: RootState, industry: string) =>
-  state.notes.data.find((ele) => ele.industry.toLowerCase() === industry)
-
-// Other code such as selectors can use the imported `RootState` type
 
 export default NotesSlice.reducer

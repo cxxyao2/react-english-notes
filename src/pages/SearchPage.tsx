@@ -42,11 +42,11 @@ export default function SearchPage() {
       if (showBoth) {
         isTrue =
           ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
-          ele.industry.toLowerCase() === industry.toLowerCase()
+          ele.industry.toLowerCase().includes(industry.toLowerCase())
       } else {
         isTrue =
           ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
-          ele.industry.toLowerCase() === industry.toLowerCase() &&
+          ele.industry.toLowerCase().includes(industry.toLowerCase()) &&
           ele.mastered === masteredStatus
       }
       return isTrue

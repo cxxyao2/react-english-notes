@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { addNote } from 'reducers/notesSlice'
-import { selectAllTopics } from 'reducers/topicsSlice'
+import { topicsSelector } from 'reducers/topicsSlice'
 import { selectAllCards, updateCard } from 'reducers/cardsSlice'
 import { updateTopic } from './../reducers/topicsSlice'
 import { selectAllStats, updateStat } from 'reducers/statsSlice'
@@ -19,7 +19,8 @@ import { selectAllStats, updateStat } from 'reducers/statsSlice'
 const MarkdownEditor = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const allTopics = useAppSelector(selectAllTopics)
+
+  const allTopics = useAppSelector(topicsSelector)
   const allCards = useAppSelector(selectAllCards)
   const allStats = useAppSelector(selectAllStats)
 
@@ -126,7 +127,6 @@ const MarkdownEditor = () => {
     dispatch(addNote(note1)).then((result) => {
       const returnedNote = result.payload as Note
       note1.id = returnedNote.id
-      console.log('add new note', result)
 
       if (note1.category === 'topic') {
         updateSectionTopic(note1)

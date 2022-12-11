@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -92,7 +92,18 @@ export const TopicsSlice = createSlice({
   }
 })
 
-export const selectAllTopics = (state: RootState) => state.topics.data
+// export const selectAllTopics = (state: RootState) => {
+//   console.log('hi,selectAllTopics selector is called')
+//   return state.topics.data
+// }
+
+export const topicsSelector = createSelector(
+  (state: RootState) => state.topics.data,
+  (topics) => {
+    console.log('hi,selectAllTopics selector is called')
+    return topics}
+)
+
 export const selectTopicById = (state: RootState, TopicId: string) =>
   state.topics.data.find((ele) => ele.id === TopicId)
 

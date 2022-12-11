@@ -5,12 +5,12 @@ import SectionTopics from 'components/SectionTopics'
 import SectionHero from 'components/SectionHero'
 
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { selectAllCards, fetchCards, updateCard } from 'reducers/cardsSlice'
-import { selectAllStats, updateStat } from 'reducers/statsSlice'
-import { selectAllNotes, updateNote, fetchNotes } from 'reducers/notesSlice'
+import { fetchCards } from 'reducers/cardsSlice'
+
+import { fetchNotes } from 'reducers/notesSlice'
 import { useNavigate } from 'react-router-dom'
 import { useSearch } from 'contexts/SearchContext'
-import { fetchTopics, selectAllTopics } from 'reducers/topicsSlice'
+import { fetchTopics } from 'reducers/topicsSlice'
 import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
 

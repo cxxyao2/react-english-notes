@@ -3,7 +3,7 @@ import './SectionHero.css'
 import { useNavigate } from 'react-router-dom'
 import { Note } from 'models/note'
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { selectAllNotes, updateNote } from 'reducers/notesSlice'
+import { selectAllNotes, setSelectedId, updateNote } from 'reducers/notesSlice'
 import { selectAllStats, updateStat } from 'reducers/statsSlice'
 import { selectAllCards, updateCard } from 'reducers/cardsSlice'
 
@@ -90,7 +90,10 @@ const SectionHero = () => {
             <button
               className={'btn btn-sm btn-primary'}
               onClick={() => {
-                if (ele.initId) navigate(`/edit/${ele.initId}`)
+                if (ele.initId) {
+                  dispatch(setSelectedId(ele.initId!))
+                  navigate(`/edit/${ele.initId}`)
+                }
               }}>
               Learn more
             </button>
