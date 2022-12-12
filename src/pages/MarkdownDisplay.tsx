@@ -33,7 +33,7 @@ export default function MarkdownDisplay() {
         dispatch(updateNote({ id: currentNote.id, hitCounter }))
       }
     }
-  }, [id])
+  }, [id,currentNote,dispatch])
 
   const updateContent = () => {
     note && dispatch(updateNote({ id: note.id, content }))

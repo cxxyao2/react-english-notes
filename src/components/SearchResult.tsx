@@ -1,4 +1,3 @@
-import { INIT_CARD_DATA } from '../constants'
 import { Note } from 'models/note'
 import GenreCard from './GenreCard'
 

@@ -11,11 +11,11 @@ import { fetchNotes } from 'reducers/notesSlice'
 import { useSearch } from 'contexts/SearchContext'
 import {
   fetchTopics,
-  simpleStatusSelector,
   topicsStatusSelector
 } from 'reducers/topicsSlice'
 import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
+import { store } from 'store'
 
 export default function HomePage() {
   // get all data here
@@ -34,23 +34,29 @@ export default function HomePage() {
     }
     setIsLoading(true)
 
-    Promise.all([
-      dispatch(fetchCards()),
-      dispatch(fetchStats()),
-      dispatch(fetchTopics())
-    ])
-      .then(() => {
-        dispatch(fetchNotes())
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [])
+    dispatch(fetchCards())
+    dispatch(fetchStats())
+    dispatch(fetchTopics())
+
+    requestIdleCallback(() => dispatch(fetchNotes()))
+
+
+    let debounceTimeout = setTimeout(() => {
+      const jsonData = JSON.stringify(store.getState());
+      localStorage.setItem('redux-data', jsonData);
+    }, 1000);
+
+    setIsLoading(false)
+
+    return ()=>{
+      clearTimeout(debounceTimeout)
+    }
+  }, [dispatch, setIsLoading,topicsStatus])
 
   useEffect(() => {
     const error = cardsError || statsError || topicsError || ''
     setTopError(error)
-  }, [cardsError, statsError, topicsError])
+  }, [cardsError, statsError, topicsError, setTopError])
 
   return (
     <>

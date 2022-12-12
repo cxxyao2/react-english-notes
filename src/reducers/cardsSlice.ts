@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
