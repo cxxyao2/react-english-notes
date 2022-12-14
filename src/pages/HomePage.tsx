@@ -37,16 +37,9 @@ export default function HomePage() {
 
     requestIdleCallback(() => dispatch(fetchNotes()))
 
-    let debounceTimeout = setTimeout(() => {
-      const jsonData = JSON.stringify(store.getState())
-      localStorage.setItem('redux-data', jsonData)
-    }, 1000)
-
     setIsLoading(false)
 
-    return () => {
-      clearTimeout(debounceTimeout)
-    }
+    return () => {}
   }, [])
 
   useEffect(() => {
