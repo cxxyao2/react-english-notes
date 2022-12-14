@@ -2,7 +2,7 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import { Note } from 'models/note'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from 'hooks'
-import { deleteNote } from 'reducers/notesSlice'
+import { deleteNote, setSelectedId } from 'reducers/notesSlice'
 
 type CardProps = {
   item: Note
@@ -51,7 +51,9 @@ export default function GenreCard({ item }: CardProps) {
           </span>
           {item.content.slice(0, 100)}...
         </p>
-        <div className=''>
+        <div className='' onClick={()=>{
+          dispatch(setSelectedId(item.id!))
+        }}>
           <Link to={`/edit/${item.id}`} className='btn btn-primary '>
             Read more ...
           </Link>
