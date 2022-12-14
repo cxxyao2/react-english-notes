@@ -1,5 +1,6 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import logger from 'redux-logger'
+//import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
+//import logger from 'redux-logger'
 import cardsReducer from './reducers/cardsSlice'
 import notesReducer from './reducers/notesSlice'
 import statsReducer from './reducers/statsSlice'

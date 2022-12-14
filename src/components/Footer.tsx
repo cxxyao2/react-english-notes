@@ -24,17 +24,17 @@ const Footer = () => {
 
         <ul className='nav col-md-4 justify-content-end list-unstyled d-flex'>
           <li className='ms-3'>
-            <a className='text-muted' href='#' aria-label='twitter icon'>
+            <a className='text-muted' href='# ' aria-label='twitter icon'>
               <SvgTwitter />
             </a>
           </li>
           <li className='ms-3'>
-            <a className='text-muted' href='#' aria-label='instagram icon'>
+            <a className='text-muted' href='# ' aria-label='instagram icon'>
               <SvgGithub />
             </a>
           </li>
           <li className='ms-3'>
-            <a className='text-muted' href='#' aria-label='facebook icon'>
+            <a className='text-muted' href='# ' aria-label='facebook icon'>
               <SvgLinkedin></SvgLinkedin>
             </a>
           </li>

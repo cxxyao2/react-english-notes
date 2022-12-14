@@ -55,7 +55,7 @@ export default function SearchForm({ triggerSearch }: Props) {
     const formData = new FormData(formRef.current)
     triggerSearch(formData)
   }
-  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 300), [])
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 300), [changeHandler])
 
   return (
     <form noValidate ref={formRef} role='search'>

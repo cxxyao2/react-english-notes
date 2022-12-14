@@ -51,10 +51,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return sendPasswordResetEmail(auth, email)
   }
 
-  const updateUserPassword = (newPassword: string) => {
-    return currentUser && updatePassword(currentUser, newPassword)
-    //  return currentUser && updateEmail(currentUser,email)
-  }
+  // const updateUserPassword = (newPassword: string) => {
+  //   return currentUser && updatePassword(currentUser, newPassword)
+  //   //  return currentUser && updateEmail(currentUser,email)
+  // }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

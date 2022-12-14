@@ -1,4 +1,3 @@
-
 import topicImg from './SectionTopicIT.jpg'
 import './SectionHero.css'
 import { useNavigate } from 'react-router-dom'
@@ -20,8 +19,6 @@ const SectionHero = () => {
   const allStats = useAppSelector(selectAllStats)
   const allCards = useAppSelector(selectAllCards)
   const allNotes = useAppSelector(selectAllNotes)
-
- 
 
   const onDismiss = async (currentCard: Note) => {
     // 1, update notes table
@@ -91,7 +88,7 @@ const SectionHero = () => {
             <button
               className='btn btn-sm btn-outline-secondary'
               onClick={() => {
-                if (allNotes.length == 0) {
+                if (allNotes.length === 0) {
                   dispatch(fetchNotes()).then(() => {
                     if (ele.initId) onDismiss(ele)
                   })

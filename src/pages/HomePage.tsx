@@ -9,10 +9,7 @@ import { fetchCards } from 'reducers/cardsSlice'
 
 import { fetchNotes } from 'reducers/notesSlice'
 import { useSearch } from 'contexts/SearchContext'
-import {
-  fetchTopics,
-  topicsStatusSelector
-} from 'reducers/topicsSlice'
+import { fetchTopics, topicsStatusSelector } from 'reducers/topicsSlice'
 import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
 import { store } from 'store'
@@ -40,18 +37,17 @@ export default function HomePage() {
 
     requestIdleCallback(() => dispatch(fetchNotes()))
 
-
     let debounceTimeout = setTimeout(() => {
-      const jsonData = JSON.stringify(store.getState());
-      localStorage.setItem('redux-data', jsonData);
-    }, 1000);
+      const jsonData = JSON.stringify(store.getState())
+      localStorage.setItem('redux-data', jsonData)
+    }, 1000)
 
     setIsLoading(false)
 
-    return ()=>{
+    return () => {
       clearTimeout(debounceTimeout)
     }
-  }, [dispatch, setIsLoading,topicsStatus])
+  }, [])
 
   useEffect(() => {
     const error = cardsError || statsError || topicsError || ''
