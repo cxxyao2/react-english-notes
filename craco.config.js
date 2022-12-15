@@ -1,5 +1,5 @@
-const BundleAnalyzerPlugin =
- require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin =
+//  require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
@@ -8,6 +8,6 @@ module.exports = {
     enableTypeChecking: true /* (default value) */
   },
   webpack: {
-    plugins: [new CompressionPlugin(), new BundleAnalyzerPlugin()]
+    plugins: [new CompressionPlugin()]
   }
 }
