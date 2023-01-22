@@ -81,7 +81,7 @@ const Header = () => {
                     to='/about'
                     className={className}
                     activeClassName={activeClassName}>
-                    About
+                    Archive
                   </MyNavLink>
                 </li>
                 <li className='d-none d-md-block nav-item me-4'>

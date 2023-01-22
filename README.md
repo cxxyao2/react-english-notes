@@ -1,5 +1,11 @@
 # English Notes
 
+## run
+
+```
+npm start
+```
+
 ## Objective
 
 - Create a high performance React App

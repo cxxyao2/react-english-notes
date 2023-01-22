@@ -1,38 +1,105 @@
-// import { useState } from 'react'
+import { TrashIcon } from '@heroicons/react/24/outline'
+import MDEditor from '@uiw/react-md-editor'
+import Paginator from 'components/paginator'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { Note } from 'models/note'
+import { useEffect, useState } from 'react'
+import { deleteNote, selectAllNotes } from 'reducers/notesSlice'
 
-// import { EditorState, ContentState, convertFromHTML } from 'draft-js'
-// import { Editor } from 'react-draft-wysiwyg'
+const AboutPage = () => {
+  const dispatch = useAppDispatch()
+  const allNotes = useAppSelector(selectAllNotes)
+  const [current, setCurrent] = useState(1)
+  const [itemNumber, setItemNumber] = useState(5)
 
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+  const [selectedId, setSelectedId] = useState<string | undefined>('')
+  const [selectedContent, setSelectedContent] = useState<string | undefined>('')
 
-// const AboutPage = () => {
-//   const [editorState, setEditorState] = useState(() =>
-//     EditorState.createEmpty()
-//   )
+  const [displayedNotes, setDisplayedNotes] = useState<Note[]>([])
 
-//   useEffect(()=>{
+  const handlePageChanged = (
+    currentPage: number,
+    itemNumberPerPage: number
+  ) => {
+    setCurrent(currentPage)
+    setItemNumber(itemNumberPerPage)
+  }
 
-//     const contentBlock = htmlToDraft('ddommm')
-//     const  contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
-//     const _editorState = EditorState.createWithContent(contentState)
-//     setEditorState(_editorState)
+  useEffect(() => {
+    setDisplayedNotes(
+      allNotes.slice((current - 1) * itemNumber, current * itemNumber)
+    )
+  }, [current, itemNumber, allNotes])
 
-//   },[])
+  return (
+    <div
+      className='container bg-white mt-3 rounded'
+      style={{ minHeight: '70vh' }}>
+      <div className='row fw-bold text-center my-2'>
+        <div className='col-12'>Archive</div>
+      </div>
 
-//   const onEditorStateChange = () => {
+      <div className='row text-left'>
+        <div className='col-4'>
+          <Paginator
+            itemCount={allNotes?.length}
+            pageChanged={(currentPage, itemNumberPerPage) =>
+              handlePageChanged(currentPage, itemNumberPerPage)
+            }
+            className='mt-2'></Paginator>
+          <hr></hr>
+          <div>
+            {' '}
+            {displayedNotes.map((note) => (
+              <div
+                key={note.id}
+                onClick={() => {
+                  setSelectedId(note.id)
+                  setSelectedContent(note.content)
+                }}>
+                <div style={{ fontSize: '0.8125rem' }}>
+                  {new Date(note.updated || Date.now()).toLocaleDateString()}
+                </div>
+                <div className='fw-bold'>{note.keyword}</div>
+                <hr></hr>
+              </div>
+            ))}
+          </div>
 
-//   }
-
-//   return (
-//     <Editor
-//     editorState={editorState}
-//   toolbarClassName="toolbarClassName"
-//   wrapperClassName="wrapperClassName"
-//   editorClassName="editorClassName"
-//   onEditorStateChange={onEditorStateChange}
-//     />
-//   )
-// }
-
-const AboutPage = () => <div>About</div>
+          <Paginator
+            itemCount={allNotes?.length}
+            pageChanged={(currentPage, itemNumberPerPage) =>
+              handlePageChanged(currentPage, itemNumberPerPage)
+            }
+            className='mt-2'></Paginator>
+        </div>
+        <div className='col-8 p-4 bg-info d-flex flex-column justify-content-start align-items-center '>
+          <div className='bg-info h-25'>
+            <button
+              aria-label='Delete'
+              onClick={() => {
+                if (!selectedId) {
+                  return
+                }
+                if (
+                  window.confirm('Are you sure to delete the record?') !== true
+                ) {
+                  return
+                }
+                dispatch(deleteNote(selectedId))
+              }}
+              className=' rounded-2 px-2 py-1  bg-dark text-warning'>
+              <TrashIcon style={{ width: '24px', height: '24px' }} />
+            </button>
+          </div>
+          <MDEditor.Markdown
+            source={selectedContent}
+            className='p-2 col-10 rounded'
+            style={{ whiteSpace: 'pre-wrap' }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 export default AboutPage

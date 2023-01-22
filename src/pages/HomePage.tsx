@@ -12,7 +12,6 @@ import { useSearch } from 'contexts/SearchContext'
 import { fetchTopics, topicsStatusSelector } from 'reducers/topicsSlice'
 import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
-import { store } from 'store'
 
 export default function HomePage() {
   // get all data here
@@ -31,15 +30,14 @@ export default function HomePage() {
     }
     setIsLoading(true)
 
-    dispatch(fetchCards())
-    dispatch(fetchStats())
-    dispatch(fetchTopics())
-
-    requestIdleCallback(() => dispatch(fetchNotes()))
-
-    setIsLoading(false)
-
-    return () => {}
+    Promise.all([
+      dispatch(fetchCards()),
+      dispatch(fetchStats()),
+      dispatch(fetchTopics()),
+      dispatch(fetchNotes())
+    ]).finally(() => {
+      setIsLoading(false)
+    })
   }, [])
 
   useEffect(() => {

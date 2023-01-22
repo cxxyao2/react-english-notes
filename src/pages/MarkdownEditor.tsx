@@ -209,7 +209,7 @@ const MarkdownEditor = () => {
 
             <div className='col-md-6 mb-3'>
               <label htmlFor='createdTime'>Created Time: </label>
-              <input
+              <input aria-label='input time'
                 ref={inputTimeRef}
                 id='createTime'
                 className='form-control'
