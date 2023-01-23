@@ -30,13 +30,19 @@ export const getNoteFromDocument = (
   const keyword = Array.isArray(doc.keyword)
     ? doc.keyword.join(' ')
     : doc.keyword
-
+  let createdTime = new Date().getTime()
+  try {
+    createdTime = (doc.created.toDate() as Date).getTime()
+  } catch (err) {
+    console.log('error data is', doc)
+    console.log('err is', err)
+  }
   // created: (doc.created.toDate() as Date).getTime() || new Date().getTime(),
   return {
     language: doc.language || 'en',
     category: 'word',
     keyword: keyword,
-    created: new Date().getTime(),
+    created: createdTime,
     content: doc.content,
     industry: doc.industry || 'IT',
     mastered: doc.mastered || false,

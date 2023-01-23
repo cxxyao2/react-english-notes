@@ -21,8 +21,8 @@ const AboutPage = () => {
     currentPage: number,
     itemNumberPerPage: number
   ) => {
-    setCurrent(currentPage)
-    setItemNumber(itemNumberPerPage)
+    setCurrent(() => currentPage)
+    setItemNumber(() => itemNumberPerPage)
   }
 
   useEffect(() => {
@@ -48,30 +48,23 @@ const AboutPage = () => {
             }
             className='mt-2'></Paginator>
           <hr></hr>
-          <div>
+          <ul>
             {' '}
             {displayedNotes.map((note) => (
-              <div
+              <li
                 key={note.id}
                 onClick={() => {
                   setSelectedId(note.id)
                   setSelectedContent(note.content)
                 }}>
                 <div style={{ fontSize: '0.8125rem' }}>
-                  {new Date(note.updated || Date.now()).toLocaleDateString()}
+                  {new Date(note.created || Date.now()).toLocaleDateString()}
                 </div>
                 <div className='fw-bold'>{note.keyword}</div>
                 <hr></hr>
-              </div>
+              </li>
             ))}
-          </div>
-
-          <Paginator
-            itemCount={allNotes?.length}
-            pageChanged={(currentPage, itemNumberPerPage) =>
-              handlePageChanged(currentPage, itemNumberPerPage)
-            }
-            className='mt-2'></Paginator>
+          </ul>
         </div>
         <div className='col-8 p-4 bg-info d-flex flex-column justify-content-start align-items-center '>
           <div className='bg-info h-25'>

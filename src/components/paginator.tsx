@@ -25,14 +25,15 @@ const Paginator = ({
 
   return (
     <div
-      className={`d-flex justify-content-start align-items-center   ${className}`}>
+      className={`d-flex  justify-content-start align-items-center   ${className}`}>
       <div className='d-flex align-items-center '>
-        Items per page{' '}
+        per page{' '}
         <select
           aria-label='select page number'
           className='px-2 mx-1 rounded-sm'
           onChange={(e) => {
             setItemNumberPerPage(parseInt(e.target.value))
+            pageChanged(1, parseInt(e.target.value))
           }}>
           <option value={5}> 5</option>
           <option value={10}> 10</option>
