@@ -77,7 +77,7 @@ const MarkdownEditor = () => {
   }
 
   const updateSectionCard = (newNote: Note) => {
-    // 1, update stats table: unmastered + 1
+    // 1, update stats table: unmastered counter + 1
     const stat = allStats.find((ele) => ele.name === newNote.industry)
     if (stat) {
       let unmastered = stat.unmastered + 1
