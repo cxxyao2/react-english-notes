@@ -8,7 +8,7 @@ import rehypeSanitize from 'rehype-sanitize'
 import { EyeIcon } from '@heroicons/react/24/outline'
 import { useAppSelector, useAppDispatch } from 'hooks'
 import { noteIdSelector, updateNote } from '../reducers/notesSlice'
-import './MarkDownDisplay.css'
+import './MarkdownDisplay.css'
 
 export default function MarkdownDisplay() {
 	const { id } = useParams()

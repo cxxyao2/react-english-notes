@@ -10,7 +10,7 @@ import PrivateOutlet from './components/PrivateOutlet'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const LoginPage = lazy(() => import('./pages/Login'))
-const DisplayPage = lazy(() => import('./pages/MarkDownDisplay'))
+const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
 const EditPage = lazy(() => import('./pages/MarkdownEditor'))
 const SearchPage = lazy(() => import('./pages/SearchPage'))
 const SearchBook = lazy(() => import('./pages/SearchBook'))
