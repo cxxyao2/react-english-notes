@@ -78,7 +78,7 @@ const Header = () => {
                 </li>
                 <li className='d-none d-md-block nav-item me-4'>
                   <MyNavLink
-                    to='/about'
+                    to='/archive'
                     className={className}
                     activeClassName={activeClassName}>
                     Archive

@@ -1,4 +1,3 @@
-import MDEditor from '@uiw/react-md-editor'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 

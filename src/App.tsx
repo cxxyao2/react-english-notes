@@ -8,7 +8,7 @@ import NotFound from 'pages/NotFound'
 import PrivateOutlet from './components/PrivateOutlet'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ArchivePage = lazy(() => import('./pages/ArchivePage'))
 const LoginPage = lazy(() => import('./pages/Login'))
 const DisplayPage = lazy(() => import('./pages/MarkdownDisplay'))
 const EditPage = lazy(() => import('./pages/MarkdownEditor'))
@@ -76,10 +76,10 @@ function App() {
 								}
 							/>
 							<Route
-								path='/about'
+								path='/archive'
 								element={
 									<React.Suspense fallback={<div>Loading...</div>}>
-										<AboutPage />
+										<ArchivePage />
 									</React.Suspense>
 								}
 							/>

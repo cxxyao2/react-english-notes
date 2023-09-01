@@ -93,10 +93,10 @@ const Asidebar = () => {
               closeRef?.current?.click()
             }}>
             <MyNavLink
-              to='/about'
+              to='/archive'
               className='nav-link'
               activeClassName='nav-link active'>
-              About
+              Archive
             </MyNavLink>
           </li>
           <hr />

@@ -14,47 +14,47 @@ import { useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
 
 export default function HomePage() {
-  // get all data here
+	// get all data here
 
-  const dispatch = useAppDispatch()
-  const { setIsLoading, setTopError } = useSearch()
+	const dispatch = useAppDispatch()
+	const { setIsLoading, setTopError } = useSearch()
 
-  const cardsError = useAppSelector((state) => state.cards.error)
-  const statsError = useAppSelector((state) => state.stats.error)
-  const topicsError = useAppSelector((state) => state.topics.error)
-  const topicsStatus = useAppSelector(topicsStatusSelector)
+	const cardsError = useAppSelector((state) => state.cards.error)
+	const statsError = useAppSelector((state) => state.stats.error)
+	const topicsError = useAppSelector((state) => state.topics.error)
+	const topicsStatus = useAppSelector(topicsStatusSelector)
 
-  useEffect(() => {
-    if (topicsStatus !== 'idle') {
-      return
-    }
-    setIsLoading(true)
+	useEffect(() => {
+		if (topicsStatus !== 'idle') {
+			return
+		}
+		setIsLoading(true)
 
-    Promise.all([
-      dispatch(fetchCards()),
-      dispatch(fetchStats()),
-      dispatch(fetchTopics()),
-      dispatch(fetchNotes())
-    ]).finally(() => {
-      setIsLoading(false)
-    })
-  }, [])
+		Promise.all([
+			dispatch(fetchCards()),
+			dispatch(fetchStats()),
+			dispatch(fetchTopics()),
+			dispatch(fetchNotes())
+		]).finally(() => {
+			setIsLoading(false)
+		})
+	}, [dispatch, setIsLoading, topicsStatus])
 
-  useEffect(() => {
-    const error = cardsError || statsError || topicsError || ''
-    setTopError(error)
-  }, [cardsError, statsError, topicsError, setTopError])
+	useEffect(() => {
+		const error = cardsError || statsError || topicsError || ''
+		setTopError(error)
+	}, [cardsError, statsError, topicsError, setTopError])
 
-  return (
-    <>
-      <SectionSecondNavbar></SectionSecondNavbar>
+	return (
+		<>
+			<SectionSecondNavbar></SectionSecondNavbar>
 
-      <SectionHero></SectionHero>
+			<SectionHero></SectionHero>
 
-      <SectionWords></SectionWords>
+			<SectionWords></SectionWords>
 
-      <SectionTopics></SectionTopics>
-      <Statistics></Statistics>
-    </>
-  )
+			<SectionTopics></SectionTopics>
+			<Statistics></Statistics>
+		</>
+	)
 }

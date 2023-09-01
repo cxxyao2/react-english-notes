@@ -11,6 +11,7 @@ export function getMessageOfError(error: unknown) {
   return errorMessage
 }
 
+
 export function downloadJson() {
   let data = JSON.stringify({ weather: { is_sunny: true, temperature: 23 } })
   let dataUri =
@@ -51,3 +52,4 @@ export const getNoteFromDocument = (
     id: id
   }
 }
+

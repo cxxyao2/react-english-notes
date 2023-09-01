@@ -5,8 +5,11 @@ import * as Yup from 'yup'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { getMessageOfError } from 'utils'
+import { useSearch } from 'contexts/SearchContext'
 
-export default function Login() {
+export default function Login()
+{
+  const { setTopError } = useSearch()
   const navigate = useNavigate()
   const location = useLocation()
   const redirectPath = location.state?.path || '/'
@@ -23,16 +26,15 @@ export default function Login() {
   const { register, handleSubmit, reset, formState } = useForm(formOptions)
   const { errors } = formState
   const { login } = useAuth()
-  const [errorFromServer, setErrorFromServer] = useState<string | null>(null)
 
   const onSubmit = async (data: any) => {
     try {
-      setErrorFromServer(null)
       await login(data.email, data.password)
+      setTopError('')
       navigate(redirectPath, { replace: true })
     } catch (error) {
       let errorMessage = getMessageOfError(error)
-      setErrorFromServer(errorMessage)
+      setTopError(errorMessage)
     }
   }
 
@@ -75,11 +77,7 @@ export default function Login() {
             </div>
           )}
 
-          {errorFromServer && (
-            <div className='w-100 text-center text-danger my-2'>
-              {errorFromServer}
-            </div>
-          )}
+
 
           <div className='d-flex justify-content-around'>
             <button type='submit' className='btn btn-primary mx-4'>

@@ -63,6 +63,7 @@ export const updateNote = createAsyncThunk(
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   const response = await getDocs(collection(db, 'notes'))
+  console.log('latest notes are ', response)
   const notes: Note[] = []
   response.forEach((doc) => {
     const docu = doc.data()
