@@ -7,24 +7,24 @@ import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
 function Layout() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <>
-        <Toast />
-        <Header></Header>
-        <Asidebar></Asidebar>
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<div className='bg-white position-relative'>
+				<Toast />
+				<Header></Header>
+				<Asidebar></Asidebar>
 
-        <main style={{ minHeight: '70vh' }}>
-          <Outlet />
-        </main>
+				<main style={{ minHeight: '100vh' }} className='d-flex flex-column justify-content-between'>
+					<Outlet />
+					<Footer></Footer>
+				</main>
 
-        <Footer></Footer>
-        <LoadingSpinner />
+				<LoadingSpinner />
 
-        {/* <BackToTop */}
-      </>
-    </Suspense>
-  )
+				{/* <BackToTop */}
+			</div>
+		</Suspense>
+	)
 }
 
 export default Layout
