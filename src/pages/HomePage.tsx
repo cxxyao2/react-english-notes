@@ -27,22 +27,22 @@ export default function HomePage() {
 	const topicsStatus = useAppSelector(topicsStatusSelector)
 
 	useEffect(() => {
-		if (topicsStatus !== 'idle') {
-			return
+		if (topicsStatus === 'idle' || topicsStatus === 'failed') {
+			setIsLoading(true)
+			Promise.all([
+				dispatch(fetchCards()),
+				dispatch(fetchStats()),
+				dispatch(fetchTopics()),
+				dispatch(fetchNotes())
+			]).finally(() => {
+				console.log()
+				setIsLoading(false)
+			})
 		}
-		setIsLoading(true)
-
-		Promise.all([
-			dispatch(fetchCards()),
-			dispatch(fetchStats()),
-			dispatch(fetchTopics()),
-			dispatch(fetchNotes())
-		]).finally(() => {
-			setIsLoading(false)
-		})
-	}, [dispatch, setIsLoading, topicsStatus])
+	}, [])
 
 	useEffect(() => {
+		// TODO: error message 没有正确初始化
 		const error = cardsError || statsError || topicsError || ''
 		setData(error)
 	}, [cardsError, statsError, topicsError, setData])

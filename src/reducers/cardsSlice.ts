@@ -61,6 +61,7 @@ export const CardsSlice = createSlice({
       (state: CardsState, action: PayloadAction<Note[]>) => {
         state.status = 'succeeded'
         state.data = action.payload
+        state.error = null
       }
     )
     builder.addCase(fetchCards.rejected, (state: CardsState, action) => {

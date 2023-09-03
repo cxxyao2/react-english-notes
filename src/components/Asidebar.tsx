@@ -105,7 +105,7 @@ const Asidebar = () => {
             onClick={() => {
               closeRef?.current?.click()
             }}>
-            <button className='nav-link' onClick={() => signOut()}>
+            <button className='nav-link' onClick={() => { signOut(); window.location.reload(); } }>
               Logout
             </button>
           </li>
