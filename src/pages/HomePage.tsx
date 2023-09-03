@@ -10,14 +10,16 @@ import { fetchCards } from 'reducers/cardsSlice'
 import { fetchNotes } from 'reducers/notesSlice'
 import { useSearch } from 'contexts/SearchContext'
 import { fetchTopics, topicsStatusSelector } from 'reducers/topicsSlice'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { fetchStats } from './../reducers/statsSlice'
+import { ToastContext } from 'contexts/ToastContext'
 
 export default function HomePage() {
 	// get all data here
 
 	const dispatch = useAppDispatch()
-	const { setIsLoading, setTopError } = useSearch()
+	const { setIsLoading } = useSearch()
+	const { setData } = useContext(ToastContext)
 
 	const cardsError = useAppSelector((state) => state.cards.error)
 	const statsError = useAppSelector((state) => state.stats.error)
@@ -42,8 +44,8 @@ export default function HomePage() {
 
 	useEffect(() => {
 		const error = cardsError || statsError || topicsError || ''
-		setTopError(error)
-	}, [cardsError, statsError, topicsError, setTopError])
+		setData(error)
+	}, [cardsError, statsError, topicsError, setData])
 
 	return (
 		<>

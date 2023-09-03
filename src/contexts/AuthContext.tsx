@@ -3,8 +3,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-  User,
-  updatePassword
+  User
 } from 'firebase/auth'
 import React, { useContext, ReactNode, useState, useEffect } from 'react'
 

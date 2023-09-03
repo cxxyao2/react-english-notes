@@ -3,8 +3,6 @@ import { useState, createContext, useContext, ReactNode } from 'react'
 interface SearchContextType {
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  topError: string
-  setTopError: React.Dispatch<React.SetStateAction<string>>
   searchKey: string
   setSearchKey: React.Dispatch<React.SetStateAction<string>>
 }
@@ -25,14 +23,11 @@ export function SearchContextProvider({
   children
 }: SearchContextProviderProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const [topError, setTopError] = useState<string>('')
   const [searchKey, setSearchKey] = useState<string>('')
 
   const value = {
     isLoading,
     setIsLoading,
-    topError,
-    setTopError,
     searchKey,
     setSearchKey
   }

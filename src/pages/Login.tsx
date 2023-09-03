@@ -4,11 +4,12 @@ import * as Yup from 'yup'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { getMessageOfError } from 'utils'
-import { useSearch } from 'contexts/SearchContext'
+import { useContext } from 'react'
+import { ToastContext } from 'contexts/ToastContext'
 
 export default function Login()
 {
-  const { setTopError } = useSearch()
+ 	  const { setData } = useContext(ToastContext)
   const navigate = useNavigate()
   const location = useLocation()
   const redirectPath = location.state?.path || '/'
@@ -29,11 +30,11 @@ export default function Login()
   const onSubmit = async (data: any) => {
     try {
       await login(data.email, data.password)
-      setTopError('')
+       setData('')
       navigate(redirectPath, { replace: true })
     } catch (error) {
       let errorMessage = getMessageOfError(error)
-      setTopError(errorMessage)
+       setData(errorMessage)
     }
   }
 

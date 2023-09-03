@@ -11,10 +11,12 @@ function Layout() {
 		<Suspense fallback={<div>Loading...</div>}>
 			<div className='bg-white position-relative'>
 				<Toast />
-				<Header></Header>
 				<Asidebar></Asidebar>
 
-				<main style={{ minHeight: '100vh' }} className='d-flex flex-column justify-content-between'>
+				<main
+					style={{ minHeight: '100vh' }}
+					className='d-flex flex-column justify-content-between'>
+					<Header></Header>
 					<Outlet />
 					<Footer></Footer>
 				</main>

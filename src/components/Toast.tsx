@@ -1,8 +1,10 @@
-import { useSearch } from 'contexts/SearchContext'
+import { ToastContext } from 'contexts/ToastContext'
+import { useContext } from 'react'
 
-const Toast = () => {
-  const { topError, setTopError } = useSearch()
-  if (!topError) return null
+const Toast = () =>
+{
+  const {data, setData } = useContext(ToastContext)
+  if (!data) return null
 
   return (
     <div
@@ -14,12 +16,12 @@ const Toast = () => {
         aria-live='assertive'
         aria-atomic='true'>
         <div className='d-flex'>
-          <div className='toast-body'>{topError}</div>
+          <div className='toast-body'>{data}</div>
           <button
             type='button'
             className='btn-close me-2 m-auto'
             aria-label='Close'
-            onClick={() => setTopError('')}></button>
+            onClick={() => setData('')}></button>
         </div>
       </div>
     </div>

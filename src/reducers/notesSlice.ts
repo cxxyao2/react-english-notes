@@ -87,6 +87,7 @@ export const NotesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchNotes.pending, (state: NotesState) => {
       state.status = 'loading'
+       state.error = null
     })
     builder.addCase(
       fetchNotes.fulfilled,
@@ -102,6 +103,7 @@ export const NotesSlice = createSlice({
 
     builder.addCase(updateNote.pending, (state: NotesState) => {
       state.status = 'loading'
+       state.error = null
     })
     builder.addCase(
       updateNote.fulfilled,
@@ -123,6 +125,7 @@ export const NotesSlice = createSlice({
 
     builder.addCase(addNote.pending, (state: NotesState) => {
       state.status = 'loading'
+       state.error = null
     })
 
     builder.addCase(addNote.fulfilled, (state: NotesState, action) => {

@@ -54,6 +54,7 @@ export const CardsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCards.pending, (state: CardsState) => {
       state.status = 'loading'
+      state.error = null
     })
     builder.addCase(
       fetchCards.fulfilled,
@@ -68,6 +69,7 @@ export const CardsSlice = createSlice({
     })
     builder.addCase(updateCard.pending, (state: CardsState) => {
       state.status = 'loading'
+       state.error = null
     })
     builder.addCase(
       updateCard.fulfilled,

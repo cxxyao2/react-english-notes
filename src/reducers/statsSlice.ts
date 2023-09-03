@@ -67,6 +67,7 @@ export const StatsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchStats.pending, (state: StatsState) => {
       state.status = 'loading'
+       state.error = null
     })
     builder.addCase(
       fetchStats.fulfilled,
@@ -82,6 +83,7 @@ export const StatsSlice = createSlice({
 
     builder.addCase(updateStat.pending, (state: StatsState) => {
       state.status = 'loading'
+       state.error = null
     })
     builder.addCase(
       updateStat.fulfilled,
