@@ -42,7 +42,6 @@ export default function HomePage() {
 	}, [])
 
 	useEffect(() => {
-		// TODO: error message 没有正确初始化
 		const error = cardsError || statsError || topicsError || ''
 		setData(error)
 	}, [cardsError, statsError, topicsError, setData])

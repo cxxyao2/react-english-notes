@@ -17,7 +17,9 @@ function Layout() {
 					style={{ minHeight: '100vh' }}
 					className='d-flex flex-column justify-content-between'>
 					<Header></Header>
-					<Outlet />
+					<div className='align-self-stretch'>
+						<Outlet />
+					</div>
 					<Footer></Footer>
 				</main>
 

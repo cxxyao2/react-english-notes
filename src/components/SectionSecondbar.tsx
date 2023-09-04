@@ -10,7 +10,7 @@ const SectionSecondbar = () => {
 
 
   return (
-    <div className='nav-scroller row bg-body  shadow-sm'>
+    <div className='nav-scroller row bg-body  shadow-lg'>
       <nav className='nav' aria-label='Secondary navigation'>
         {allStats &&
           allStats.map((stat) => (

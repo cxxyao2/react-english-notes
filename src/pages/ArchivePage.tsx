@@ -1,11 +1,11 @@
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { BackwardIcon, TrashIcon } from '@heroicons/react/24/outline'
 import MDEditor from '@uiw/react-md-editor'
 import Paginator from 'components/paginator'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { Note } from 'models/note'
 import { useEffect, useState } from 'react'
 import { deleteNote, fetchNotes, selectAllNotes } from 'reducers/notesSlice'
-import { makeCSV } from 'utils/fileConvert'
+import { makeText, saveBlobtoLocalFile } from 'utils/fileConvert'
 
 // AboutPage is a wrong name.  This is the Archive page.
 
@@ -20,15 +20,22 @@ const ArchivePage = () => {
 
 	const [displayedNotes, setDisplayedNotes] = useState<Note[]>([])
 
-	const exportCSV = () =>
-	{
+	const exportText = () => {
 		if (allNotes.length === 0) {
 			return
 		}
-		// todo turn the result of query into 2 dimensional array
-		// allNotes.map((note) => {
+
 		const data = allNotes.map((note) => Object.values(note))
-		makeCSV(data, 'notes.csv')
+		makeText(data, 'notes.csv')
+	}
+
+	const exportJSON = () => {
+		const jsonString = JSON.stringify(allNotes)
+		saveBlobtoLocalFile(
+			jsonString,
+			'notes.json',
+			'application/json;charset=utf-8'
+		)
 	}
 
 	const handlePageChanged = (
@@ -59,7 +66,7 @@ const ArchivePage = () => {
 	}, [current, itemNumber, allNotes])
 
 	return (
-		<div className='container bg-white mt-3 rounded'>
+		<div className='container bg-white  rounded'>
 			<div className='row fw-bold text-center my-2'>
 				<div className='col-12'>Archive</div>
 			</div>
@@ -72,9 +79,20 @@ const ArchivePage = () => {
 							handlePageChanged(currentPage, itemNumberPerPage)
 						}
 						className='mt-2'></Paginator>
-					<button className='btn btn-primary my-2' onClick={exportCSV}>
-						Export Notes To CSV
-					</button>
+					<div className='w-100 mt-2 d-flex justify-content-evenly'>
+						<button
+							className='btn btn-primary'
+							type='button'
+							onClick={exportJSON}>
+							Export JSON
+						</button>
+						<button
+							className='btn btn-secondary'
+							type='button'
+							onClick={exportText}>
+							Export Text
+						</button>
+					</div>
 					<hr></hr>
 					<ul>
 						{' '}
@@ -90,8 +108,15 @@ const ArchivePage = () => {
 					</ul>
 				</div>
 				<div className='col-8 p-4 bg-info d-flex flex-column justify-content-start align-items-center '>
-					<div className='bg-info h-25'>
+					<div className='p-2 d-flex justify-content-around'>
 						<button
+							type='button'
+							className=' rounded-2  bg-dark text-warning'
+							aria-label='Back'>
+							<BackwardIcon style={{ width: '24px', height: '24px' }} />
+						</button>
+						<button
+							type='button'
 							aria-label='Delete'
 							onClick={() => {
 								if (!selectedId) {
@@ -104,7 +129,7 @@ const ArchivePage = () => {
 								}
 								dispatch(deleteNote(selectedId))
 							}}
-							className=' rounded-2 px-2 py-1  bg-dark text-warning'>
+							className=' rounded-2  bg-dark text-warning'>
 							<TrashIcon style={{ width: '24px', height: '24px' }} />
 						</button>
 					</div>

@@ -24,3 +24,6 @@ yarn-error.log*
 temporary.md
 todos.md
 secrets.md
+
+# test data
+notes.json

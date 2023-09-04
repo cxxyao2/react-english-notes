@@ -55,7 +55,7 @@ export function saveBlobtoLocalFile(
  * @param {string} fileName
  * @returns string
  */
-export function makeCSV(contents,fileName) {
+export function makeText(contents, fileName) {
 	let csv = ''
 	contents.forEach((value) => {
 		value.forEach((item, i) => {
@@ -71,7 +71,7 @@ export function makeCSV(contents,fileName) {
 			csv += result
 		})
 		csv += '\n'
-  })
-  saveBlobtoLocalFile(csv, fileName)
+	})
+	saveBlobtoLocalFile(csv, fileName)
 	return csv
 }
