@@ -17,8 +17,6 @@ export default function SearchPage() {
 		handleSearch(currentFilters, allNotes)
 	}, [currentFilters, allNotes])
 
-
-
 	const handleSearch = (
 		newFilters: FormData | null | undefined,
 		notes: Note[]
@@ -39,20 +37,11 @@ export default function SearchPage() {
 
 		let waitingFilter = [...notes]
 
-		const filteredData = waitingFilter.filter((ele) => {
-			let isTrue = false
-			if (showBoth) {
-				isTrue =
-					ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
-					ele.industry.toLowerCase().includes(industry.toLowerCase())
-			} else {
-				isTrue =
-					ele.keyword.toLowerCase().includes(keyword.toLowerCase()) &&
-					ele.industry.toLowerCase().includes(industry.toLowerCase()) &&
-					ele.mastered === masteredStatus
-			}
-			return isTrue
-		})
+		const filteredData = waitingFilter.filter(
+			(ele) =>
+				ele.keyword.toLowerCase().includes(keyword.toLowerCase()) ||
+				ele.content.toLowerCase().includes(keyword.toLowerCase())
+		)
 
 		setResults(filteredData)
 	}

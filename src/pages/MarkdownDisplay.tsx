@@ -10,7 +10,9 @@ import { useAppSelector, useAppDispatch } from 'hooks'
 import { noteIdSelector, updateNote } from '../reducers/notesSlice'
 import './markdown.css'
 
-export default function MarkdownDisplay() {
+export default function MarkdownDisplay()
+{
+
 	const { id } = useParams()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
