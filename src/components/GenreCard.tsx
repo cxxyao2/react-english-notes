@@ -12,6 +12,7 @@ export default function GenreCard({ item }: CardProps) {
   const dispatch = useAppDispatch()
 
   const categoryColor = item.category === 'word' ? 'text-info' : 'text-warning'
+  
   return (
     <div className='card shadow position-relative overflow-hidden'>
       <div

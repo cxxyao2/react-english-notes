@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from 'hooks'
 import { addNote } from 'reducers/notesSlice'
 import { topicsSelector } from 'reducers/topicsSlice'
 import { selectAllCards, updateCard } from 'reducers/cardsSlice'
-import { updateTopic } from './../reducers/topicsSlice'
+import { updateTopic } from '../reducers/topicsSlice'
 import { selectAllStats, updateStat } from 'reducers/statsSlice'
 
 const MarkdownEditor = () => {
@@ -216,7 +216,7 @@ const MarkdownEditor = () => {
                 type='time'
                 name='createdTime'
                 min='00:01'
-                defaultValue={'01:01'}
+                defaultValue={'13:01'}
                 required></input>
 
               <div className='invalid-tooltip'>
