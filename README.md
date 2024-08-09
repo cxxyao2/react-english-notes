@@ -10,7 +10,7 @@ npm start
 
 - Create a high performance React App
 - Comply with WCAG2.1. Level AA
-- Imporve english vocabulary day by day
+- Imporve english vocabulary
 
 ## Framework and 3rd libraries
 
@@ -68,6 +68,10 @@ $env:variable='varialbe-value'
 - npx serve -s build
 - windows11 chrome: ctrl + shift + n : open a new incognito tab
 
+## Deployment
+
+[Note Demo based on React and Redux] (https://react-english-notes.vercel.app/)
+
 ## Screenshots
 
 - To use the Snipping Tool :Press Windows logo key + Shift + S.
@@ -75,7 +79,9 @@ $env:variable='varialbe-value'
 ![Lighthouse Score](./public/performance1.jpg)
 ![small-screen](./public/small-screen.jpg)
 
-# create and edit blog
+## References:
+
+- create and edit blog
 
 https://www.youtube.com/watch?v=0pPlbLyeclI
 
